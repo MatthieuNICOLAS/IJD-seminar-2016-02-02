@@ -1,0 +1,266 @@
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+\documentclass{beamer}
+
+% There are many different themes available for Beamer. A comprehensive
+% list with examples is given here:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+% You can uncomment the themes below if you would like to use a different
+% one:
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{boxes}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{default}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+\title{Programmer's Learning Machine}
+
+% A subtitle is optional and this may be deleted
+\subtitle{}
+
+\author{Matthieu~Nicolas}
+
+\date{IJD Seminar, 2016-02-02}
+
+\subject{Theoretical Computer Science}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+% Let's get started
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+% Section and subsections will appear in the presentation overview
+% and table of contents.
+\section{Presentation of PLM}
+
+\subsection{Purposes}
+
+\begin{frame}{Presentation of PLM}{Purposes}
+  \begin{itemize}
+  \item {
+    Application to learn programming.
+    \pause
+  }
+  \item {
+    Allows students to progress at their own speed...
+    \pause
+  }
+  \item {
+    ... while the teacher helps the ones having trouble.
+    \pause
+  }
+  \item {
+    Used at TELECOM Nancy since 2008.
+  }
+  \end{itemize}
+\end{frame}
+
+\subsection{Demo}
+
+% Demo or video ? Video seems more difficult to pull off
+% If demo, local or online?
+\begin{frame}{Presentation of PLM}{Quick demo}
+  \begin{center}
+    \href{https://plm.telecomnancy.univ-lorraine.fr}{\includegraphics[scale=0.20]{img/screen-webPLM-1.png}}
+  \end{center}
+\end{frame}
+
+% Before showing the architecture, talk about the fat client to justify the current state ?
+% In this case, maybe before the demo would be better
+\subsection{Architecture}
+
+\begin{frame}{Presentation of PLM}{Application's architecture}
+\end{frame}
+
+\section{User's code's assessment}
+
+\subsection{Problematic}
+
+% TODO: explain that the user's code was run directly on the server
+\begin{frame}{User's code's assessment}{Execution components}
+
+\end{frame}
+
+\begin{frame}{User's code's assessment}{Limits}
+  \begin{itemize}
+  \item {
+    How to protect ourselves from users' rookie mistakes?
+    \begin{itemize}
+    \item {
+      Infinite loops
+    }
+    \end{itemize}
+    \pause
+  }
+  \item {
+    And from more malicious "mistakes"?
+    \begin{itemize}
+    \item {
+      Infinite thread creation
+    }
+    \item {
+      Storage jamming with files
+    }
+    \end{itemize}
+    \pause
+  }
+  \item {
+    And from \emph{System.exit(whatever)}?
+    \pause
+  }
+  \item[~]
+  \item {
+    Need also to scale.
+  }
+  \end{itemize}
+\end{frame}
+
+\subsection{The judges}
+
+% TODO: What is a "judge"?
+
+% TODO: New execution workflow / New architecture
+
+% Looking for a better title
+\subsection{Isolation and virtualization}
+
+% TODO: Present Docker and why we use it
+
+% TODO: Current architecture
+
+\section{Result}
+
+\begin{frame}{Result}{Live-session in TELECOM Nancy}
+  \begin{itemize}
+  \item {
+    30 hours of live testing with 100 students.
+    \pause
+  }
+  \item {
+    Engine is (almost) working fine...
+    \pause
+  }
+  \item {
+    ... but user experience needs to be improved!
+  }
+  \end{itemize}
+\end{frame}
+
+% TODO: think of a transition between these 2 slides
+
+\begin{frame}{Result}{Live-session in TELECOM Nancy}
+  \begin{itemize}
+  \item {
+    Can't cope with the workload.
+    \pause
+  }
+  \item {
+    No tools for monitoring set up...
+    \pause
+  }
+  \item {
+    ... so the bottleneck is unknown.
+  }
+  \end{itemize}
+\end{frame}
+
+
+\section{Next steps}
+
+\begin{frame}{Next steps}{Refactor the code}
+  \begin{itemize}
+  \item {
+    Rushed to release a stable version before September...
+  }
+  \item {
+    Needed to refactor some parts of the code.
+  }
+  \item {
+    Standardized behavior of local and server mode.
+  }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Next steps}{Simplify workflow to adapt the content}
+  \begin{itemize}
+  \item {
+    Store most content inside PLM.
+  }
+  \item {
+    Heavy and error prone workflow.
+  }
+  \item {
+    Need to extract the content from PLM's jar.
+  }
+  \item {
+    Allow to implement an exercise editor.
+  }
+  \end{itemize}
+\end{frame}
+  
+\begin{frame}{Next steps}{Solve performance issues}
+  \begin{itemize}
+  \item {
+    Set up some monitoring tools.
+  }
+  \item {
+    Perform some load testing to identify the bottleneck.
+  }
+  \end{itemize}
+\end{frame}
+
+\section*{Thanks}
+
+\begin{frame}{Questions}
+  \begin{center}
+    Thanks for your attention, any questions?
+  \end{center}
+\end{frame}
+
+\end{document}
