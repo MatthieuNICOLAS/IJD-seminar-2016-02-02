@@ -63,7 +63,6 @@
   \end{frame}
 }
 
-% Let's get started
 \begin{document}
 
 \begin{frame}
@@ -75,8 +74,6 @@
   % You might wish to add the option [pausesections]
 \end{frame}
 
-% Section and subsections will appear in the presentation overview
-% and table of contents.
 \section{Presentation of PLM}
 
 \subsection{Purposes}
@@ -103,12 +100,58 @@
 
 \subsection{Demo}
 
-% Demo or video ? Video seems more difficult to pull off
-% If demo, local or online?
+% TODO: Record the video
 \begin{frame}{Presentation of PLM}{Quick demo}
   \begin{center}
     \href{https://plm.telecomnancy.univ-lorraine.fr}{\includegraphics[scale=0.20]{img/screen-webPLM-1.png}}
   \end{center}
+\end{frame}
+
+\subsection{About PLM}
+
+% QUESTION: Need slides for these infos or talk about them in the video?
+\begin{frame}{Presentation of PLM}{12 lessons, 200 exercises}
+  \begin{center}
+    \includegraphics[scale=0.18]<1>{img/maze.png}
+    \includegraphics[scale=0.18]<2>{img/hanoi.png}
+    \includegraphics[scale=0.18]<3>{img/logo.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Presentation of PLM}{Supported languages}
+  \begin{itemize}
+    \item English
+    \item French
+    \item Brazilian Portuguese
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Presentation of PLM}{Supported programming languages}
+  \begin{center}
+    \includegraphics[scale=0.16]{img/java.png}
+    ~
+    \includegraphics[scale=0.4]{img/scala.png}
+    \includegraphics[scale=0.18]{img/python.png}
+  \end{center}
+\end{frame}
+
+% TODO: Make this slide sexier
+\begin{frame}{Presentation of PLM}{Technologies used}
+  \begin{itemize}
+    \item {
+      Formerly a fat client
+      \begin{itemize} 
+        \item { Written in Java }
+      \end{itemize}
+    }
+    \item {
+      Now a web application
+      \begin{itemize}
+        \item { Server implemented in Scala using PlayFramework }
+        \item { User interface written in Javascript using AngularJS and Foundation}
+      \end{itemize}
+    }
+  \end{itemize}
 \end{frame}
 
 % Before showing the architecture, talk about the fat client to justify the current state ?
@@ -120,7 +163,7 @@
 
 \section{User's code's assessment}
 
-\subsection{Problematic}
+\subsection{Challenges}
 
 % TODO: explain that the user's code was run directly on the server
 \begin{frame}{User's code's assessment}{Execution components}
@@ -161,7 +204,7 @@
   \end{itemize}
 \end{frame}
 
-\subsection{The judges}
+\subsection{Extraction of the execution component}
 
 % TODO: What is a "judge"?
 
