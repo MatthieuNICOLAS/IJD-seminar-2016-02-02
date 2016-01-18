@@ -12,6 +12,14 @@
 
 \documentclass{beamer}
 
+\usepackage{tikz}
+\usetikzlibrary{automata, matrix,shapes.multipart,shapes.geometric,fit,scopes,positioning}
+
+\definecolor{blue-base}{RGB}{42, 79, 110}
+\definecolor{purple-custom}{RGB}{54, 51, 119}
+\definecolor{orange-custom}{RGB}{227, 164, 79}
+\definecolor{yellow-custom}{RGB}{170, 142, 57}
+
 % There are many different themes available for Beamer. A comprehensive
 % list with examples is given here:
 % http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
@@ -136,29 +144,66 @@
 \end{frame}
 
 % TODO: Make this slide sexier
-\begin{frame}{Presentation of PLM}{Technologies used}
+\begin{frame}{Presentation of PLM}{Evolution of the project}
   \begin{itemize}
     \item {
       Formerly a fat client
       \begin{itemize} 
         \item { Written in Java }
       \end{itemize}
+      \pause
     }
     \item {
-      Now a web application
+      Switch to a web application
       \begin{itemize}
         \item { Server implemented in Scala using PlayFramework }
-        \item { User interface written in Javascript using AngularJS and Foundation}
+        \item { User interface written in Javascript using AngularJS and Foundation }
       \end{itemize}
     }
   \end{itemize}
 \end{frame}
 
-% Before showing the architecture, talk about the fat client to justify the current state ?
-% In this case, maybe before the demo would be better
 \subsection{Architecture}
 
 \begin{frame}{Presentation of PLM}{Application's architecture}
+  \begin{center}
+    \begin{tikzpicture}[
+      scale=1, 
+      block/.style={
+        rectangle, rounded corners=9pt,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        draw=black!50,
+        fill=black!20
+      },
+      oauth/.style={
+        block,
+        color=white,
+        fill=purple-custom
+      }
+    ]
+
+      \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
+
+      \node[block, right=of user] (webPLM) { webPLM };
+      \node[block, below right=of webPLM] (plm-profiles) { PLM-profiles };
+
+      % OAuth-providers
+      \node[oauth, scale=0.5, below=1.5 of user] (plm-accounts) { PLM-accounts };
+      \node[scale=0.5, below=0.3 of plm-accounts] (google) { \includegraphics[scale=0.1]{img/google-logo.png} };
+      \node[scale=0.5, below=0.3 of google] (github) { \includegraphics[scale=0.1]{img/github-logo.png} };
+      \node[draw=purple-custom, densely dotted, fit=(plm-accounts) (google) (github)] (oauth-providers) {};
+      \node[color=purple-custom, below=0.1 of oauth-providers] {OAuth-providers};
+
+      \path[<->, shorten >=3pt, shorten <=3pt]
+        (user) edge (webPLM)
+        (user) edge node[sloped, anchor=center, below] {\tiny authentificate} (oauth-providers)
+        (webPLM) edge node[sloped, anchor=center, below, align=left] {\tiny retrieve user's \\\tiny preferences} (plm-profiles)
+        (webPLM) edge node[sloped, anchor=center, below]  {\tiny validate authentification} (oauth-providers);
+
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \section{User's code's assessment}
@@ -199,7 +244,7 @@
   }
   \item[~]
   \item {
-    Need also to scale.
+    Also need to scale.
   }
   \end{itemize}
 \end{frame}
@@ -252,7 +297,6 @@
   }
   \end{itemize}
 \end{frame}
-
 
 \section{Next steps}
 
