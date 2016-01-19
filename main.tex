@@ -186,8 +186,7 @@
 
       \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
 
-      \node[block, right=of user] (webPLM) { webPLM };
-      \node[block, below right=of webPLM] (plm-profiles) { PLM-profiles };
+      \node[block, right=1.5 of user] (webPLM) { webPLM };
 
       % OAuth-providers
       \node[oauth, scale=0.5, below=1.5 of user] (plm-accounts) { PLM-accounts };
@@ -196,11 +195,13 @@
       \node[draw=purple-custom, densely dotted, fit=(plm-accounts) (google) (github)] (oauth-providers) {};
       \node[color=purple-custom, below=0.1 of oauth-providers] {OAuth-providers};
 
+      \node[block, right=5 of oauth-providers] (plm-profiles) { PLM-profiles };
+
       \path[<->, shorten >=3pt, shorten <=3pt]
         (user) edge (webPLM)
-        (user) edge node[sloped, anchor=center, below] {\tiny authentificate} (oauth-providers)
-        (webPLM) edge node[sloped, anchor=center, below, align=left] {\tiny retrieve user's \\\tiny preferences} (plm-profiles)
-        (webPLM) edge node[sloped, anchor=center, below]  {\tiny validate authentification} (oauth-providers);
+        (user) edge node[left, scale=0.6] {authentificate} (oauth-providers)
+        (webPLM) edge[bend right] node[above right, align=center, xshift=-5, scale=0.6] {retrieve user's \\ preferences} (plm-profiles.west)
+        (webPLM) edge[bend left] node[below right, align=center, yshift=-15, xshift=-25, scale=0.6]  {validate \\ authentification} (oauth-providers.east);
 
     \end{tikzpicture}
   \end{center}
@@ -284,31 +285,28 @@
 
 \subsection{Extraction of the execution component}
 
+% TODO: Finish this slide
 \begin{frame}{User's code's assessment}{Chosen solution}
   \begin{itemize}
   \item {
     Delegate the execution to workers
-    \pause
-  }
-  \item {
-    \emph{Let it crash} strategy
-    \pause
-  }
-  \item[~]
-  \item {
-    Pros:
     \begin{itemize}
-    \item Allow to run code without impacting webPLM's performances
-    \item Meet the scalability requirements 
+    \item Called \emph{Judges} in the litterature
     \end{itemize}
     \pause
   }
   \item {
-    Cons:
+    \emph{Let it crash} strategy
     \begin{itemize}
-    \item Need to deploy them easily
-    \item Should be able to reset them
-    \item Have to restrict their resources usage
+    \item Handle timeout and crash
+    \end{itemize}
+    \pause
+  }
+  \item {
+    Distribute workload using message queues
+    \begin{itemize}
+    \item One queue for requests
+    \item One queue per result
     \end{itemize}
   }
   \end{itemize}
@@ -337,7 +335,7 @@
       \node[block, right=3 of user] (plm-actor) { PLM-actor };
       \node[block, right=1 of plm-actor] (plm-engine) { PLM-engine };
 
-      \node[draw, densely dotted, fit=(plm-actor) (plm-engine)];
+      \node[draw, densely dotted, fit=(plm-actor) (plm-engine)] {};
       \node[fit=(plm-actor) (plm-engine), yshift=-30, xshift=30] {webPLM};
 
       \node[below=1.5 of plm-actor] (center-mq) {};
@@ -352,7 +350,7 @@
       \node[judge, right=of judge1] (judge2) {Judge 2};
       \node[right=of judge2] (judge3) {...};
 
-      \node[draw, densely dotted, fit=(judge1) (judge2) (judge3)];
+      \node[draw, densely dotted, fit=(judge1) (judge2) (judge3)] {};
       \node[fit=(judge1) (judge2) (judge3), yshift=-35] {Judges};
 
       \path[->, shorten >=2pt, shorten <=2pt]
@@ -366,6 +364,28 @@
         (reply-mq.north) edge[bend left] node[left] {\tiny retrieve result} (plm-actor.south);
     \end{tikzpicture}
   \end{center}
+\end{frame}
+
+% TODO: Find a subtitle
+\begin{frame}{User's code's assessment}{}
+  \begin{itemize}
+  \item {
+    Pros:
+    \begin{itemize}
+    \item Allow to run code without impacting webPLM's performances
+    \item Meet the scalability requirements 
+    \end{itemize}
+    \pause
+  }
+  \item {
+    Cons:
+    \begin{itemize}
+    \item Need to deploy them easily
+    \item Should be able to reset them
+    \item Have to restrict their resources usage
+    \end{itemize}
+  }
+  \end{itemize}
 \end{frame}
 
 \subsection{Docker}
@@ -388,6 +408,62 @@
 \end{frame}
 
 \begin{frame}{User's code's assessment}{Example of Dockerfile}
+  \begin{itemize}
+  \item {
+    Dockerfiles describe how to set up the application
+  }
+  \begin{center}
+    \includegraphics[scale=0.12]{img/dockerfile.png}
+  \end{center}
+  \item {
+    Run \emph{docker build \textcolor{red}{-t tag} \textcolor{blue}{/path/to/Dockerfile}} to build  the image
+  }
+  \item {
+    Start containers with \emph{docker run \textcolor{red}{tag}}
+  }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{User's code's assessment}{More about Docker}
+  \begin{itemize}
+  \item {
+    Can also manage
+    \begin{itemize}
+    \item {
+      Ports
+      \pause
+    }
+    \item {
+      Volumes
+      \pause
+    }
+    \item {
+      Links between containers
+      \pause
+    }
+    \item {
+      Environment variables
+    }
+    \item {
+      Runtime constraints on resources
+    }
+    \item {
+      Restart policies
+    }
+    \item {
+      And a \textbf{lot more}
+      \pause
+    }
+    \end{itemize}
+  }
+  \item {
+    Commands can become quite complex
+  }
+  \end{itemize}
+  \begin{center} {
+    \emph{docker run \textcolor{blue}{-p 443:9443} \textcolor{red}{-link plm-accounts:accounts} \textcolor{green}{-v \raise.17ex\hbox{$\scriptstyle\sim$}/webPLM/logs/:/app/webplm-dist/logs} webPLM}
+  }
+  \end{center}
 \end{frame}
 
 \begin{frame}{User's code's assessment}{Docker-compose}
