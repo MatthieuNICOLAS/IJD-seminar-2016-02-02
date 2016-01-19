@@ -53,10 +53,10 @@
 %\usetheme{Szeged}
 %\usetheme{Warsaw}
 
-\title{Programmer's Learning Machine}
+\title{ADT PLM}
 
 % A subtitle is optional and this may be deleted
-\subtitle{}
+\subtitle{Programmer's Learning Machine}
 
 \author{Matthieu~Nicolas}
 
@@ -284,39 +284,38 @@
 
 \subsection{Extraction of the execution component}
 
-% TODO: What is a "judge"?
-\begin{frame}{User's code's assessment}{Judges}
+\begin{frame}{User's code's assessment}{Chosen solution}
   \begin{itemize}
   \item {
     Delegate the execution to workers
+    \pause
   }
   \item {
     \emph{Let it crash} strategy
+    \pause
+  }
+  \item[~]
+  \item {
+    Pros:
+    \begin{itemize}
+    \item Allow to run code without impacting webPLM's performances
+    \item Meet the scalability requirements 
+    \end{itemize}
+    \pause
   }
   \item {
-    Allow to run code without impacting webPLM's performances
-  }
-  \item {
-    Able to scale
+    Cons:
+    \begin{itemize}
+    \item Need to deploy them easily
+    \item Should be able to reset them
+    \item Have to restrict their resources usage
+    \end{itemize}
   }
   \end{itemize}
 \end{frame}
 
 % TODO: New execution workflow / New architecture
 \begin{frame}{User's code's assessment}{Architecture with judges}
-\end{frame}
-
-\begin{frame}{User's code's assessment}{Judges' constraints}
-  \begin{itemize}
-  \item {
-    Need to:
-    \begin{itemize}
-    \item deploy them easily
-    \item reset them to their original state
-    \item restrict their resources usage
-    \end{itemize}
-  }
-  \end{itemize}
 \end{frame}
 
 \subsection{Docker}
