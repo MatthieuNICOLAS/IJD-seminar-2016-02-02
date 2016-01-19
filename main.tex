@@ -314,8 +314,58 @@
   \end{itemize}
 \end{frame}
 
-% TODO: New execution workflow / New architecture
 \begin{frame}{User's code's assessment}{Architecture with judges}
+  \begin{center}
+    \begin{tikzpicture}[
+      scale=1, 
+      block/.style={
+        rectangle, rounded corners=9pt,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        draw=black!50,
+        fill=black!20
+      },
+      judge/.style={
+        block,
+        text width=4em
+      }
+    ]
+
+      \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
+
+      \node[block, right=3 of user] (plm-actor) { PLM-actor };
+      \node[block, right=1 of plm-actor] (plm-engine) { PLM-engine };
+
+      \node[draw, densely dotted, fit=(plm-actor) (plm-engine)];
+      \node[fit=(plm-actor) (plm-engine), yshift=-30, xshift=30] {webPLM};
+
+      \node[below=1.5 of plm-actor] (center-mq) {};
+
+      \node[right=0.05 of center-mq] (requests-mq) { \includegraphics[angle=-90, scale=0.3]{img/message-queue-2.png} };
+      \node[right=0.05 of center-mq, xshift=20] {\tiny Requests MQ};
+
+      \node[left=0.05 of center-mq] (reply-mq) { \includegraphics[angle=90, scale=0.3]{img/message-queue-2.png} };
+      \node[left=0.05 of center-mq, xshift=-20] {\tiny Reply MQ};
+
+      \node[judge, below=1.5 of center-mq] (judge1) {Judge 1};
+      \node[judge, right=of judge1] (judge2) {Judge 2};
+      \node[right=of judge2] (judge3) {...};
+
+      \node[draw, densely dotted, fit=(judge1) (judge2) (judge3)];
+      \node[fit=(judge1) (judge2) (judge3), yshift=-35] {Judges};
+
+      \path[->, shorten >=2pt, shorten <=2pt]
+        (user) edge node[sloped, anchor=center, above] {\tiny request execution} (plm-actor)
+        (plm-actor) edge node[sloped, anchor=center, above] {\tiny save result} (plm-engine)
+        ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay results} ([yshift=-0.2 cm]user.east);
+      \path[->, shorten >=2pt, shorten <=2pt]
+        (plm-actor.south) edge[bend left] node[below right] {\tiny submit request} (requests-mq.north)
+        (requests-mq.south) edge[bend left] node[right] {\tiny retrieve request} (judge1.north)
+        (judge1.north) edge[bend left] node[left] {\tiny send result} (reply-mq.south)
+        (reply-mq.north) edge[bend left] node[left] {\tiny retrieve result} (plm-actor.south);
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \subsection{Docker}
