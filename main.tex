@@ -210,13 +210,46 @@
 
 \subsection{Challenges}
 
-% TODO: explain that the user's code was run directly on the server
 \begin{frame}{User's code's assessment}{Execution components}
+  \begin{center}
+    % QUESTION: how to picture it better?
+    % Go further in details?
+    \begin{tikzpicture}[
+      scale=1, 
+      block/.style={
+        rectangle, rounded corners=9pt,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        draw=black!50,
+        fill=black!20
+      }
+    ]
 
+      \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
+
+      \node[block, right=2 of user] (plm-actor) { PLM-actor };
+      \node[block, right=2 of plm-actor] (plm-engine) { PLM-engine };
+
+      \node[draw, densely dotted, fit=(plm-actor) (plm-engine)] (webPLM) {};
+      \node[below=0.1 of webPLM] {webPLM};
+
+      \path[->, shorten >=2pt, shorten <=2pt]
+        (user) edge node[sloped, anchor=center, above] {\tiny request execution} (plm-actor)
+        (plm-actor) edge node[sloped, anchor=center, above] {\tiny start execution} (plm-engine)
+        ([yshift=-0.2 cm]plm-engine.west) edge node[sloped, anchor=center, below] {\tiny send results} ([yshift=-0.2 cm]plm-actor.east)
+        ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay results} ([yshift=-0.2 cm]user.east);
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}{User's code's assessment}{Limits}
   \begin{itemize}
+  \item {
+    Run on the same machine, same JVM
+    \pause
+  }
+  \item[~]
   \item {
     How to protect ourselves from users' rookie mistakes?
     \begin{itemize}
@@ -244,7 +277,7 @@
   }
   \item[~]
   \item {
-    Also need to scale.
+    Scalability issues
   }
   \end{itemize}
 \end{frame}
@@ -252,17 +285,57 @@
 \subsection{Extraction of the execution component}
 
 % TODO: What is a "judge"?
+\begin{frame}{User's code's assessment}{Judges}
+  \begin{itemize}
+  \item {
+    Delegate the execution to workers
+  }
+  \item {
+    \emph{Let it crash} strategy
+  }
+  \item {
+    Allow to run code without impacting webPLM's performances
+  }
+  \item {
+    Able to scale
+  }
+  \end{itemize}
+\end{frame}
 
 % TODO: New execution workflow / New architecture
+\begin{frame}{User's code's assessment}{Architecture with judges}
+\end{frame}
 
-% Looking for a better title
-\subsection{Isolation and virtualization}
+\begin{frame}{User's code's assessment}{Judges' constraints}
+  \begin{itemize}
+  \item {
+    Need to:
+    \begin{itemize}
+    \item deploy them easily
+    \item reset them to their original state
+    \item restrict their resources usage
+    \end{itemize}
+  }
+  \end{itemize}
+\end{frame}
+
+\subsection{Docker}
 
 % TODO: Present Docker and why we use it
+\begin{frame}{User's code's assessment}{Docker}
+\end{frame}
 
-% TODO: Current architecture
+\begin{frame}{User's code's assessment}{Example of Dockerfile}
+\end{frame}
+
+\begin{frame}{User's code's assessment}{Docker-compose}
+\end{frame}
 
 \section{Result}
+
+% TODO: Current architecture
+\begin{frame}{Result}{Current architecture}
+\end{frame}
 
 \begin{frame}{Result}{Live-session in TELECOM Nancy}
   \begin{itemize}
