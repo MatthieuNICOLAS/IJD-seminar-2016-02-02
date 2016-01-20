@@ -126,15 +126,21 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{Presentation of PLM}{Supported languages}
+\begin{frame}{Presentation of PLM}{Languages and programming languages}
   \begin{itemize}
-    \item English
-    \item French
-    \item Brazilian Portuguese
+    \item {
+      Available languages:
+      \begin{itemize}
+      \item English
+      \item French
+      \item Brazilian Portuguese
+      \end{itemize}
+    }
+    \item[~]
+    \item {
+      Supported programming languages:
+    }
   \end{itemize}
-\end{frame}
-
-\begin{frame}{Presentation of PLM}{Supported programming languages}
   \begin{center}
     \includegraphics[scale=0.16]{img/java.png}
     ~
@@ -157,11 +163,16 @@
     \item {
       Switch to a web application
       \begin{itemize}
-        \item { Server implemented in Scala using PlayFramework }
-        \item { User interface written in Javascript using AngularJS and Foundation }
+        \item { Server implemented in Scala using \emph{PlayFramework} }
+        \item { User interface written in Javascript using \emph{AngularJS} and \emph{Foundation} }
       \end{itemize}
     }
   \end{itemize}
+  \begin{center}
+    \includegraphics[scale=0.05]{img/play-logo.png}
+    ~
+    \includegraphics[scale=0.1]{img/foundation-angular.png}
+  \end{center}
 \end{frame}
 
 \subsection{Architecture}
@@ -208,11 +219,11 @@
   \end{center}
 \end{frame}
 
-\section{User's code's assessment}
+\section{Assessment of user's code}
 
 \subsection{Challenges}
 
-\begin{frame}{User's code's assessment}{Execution components}
+\begin{frame}{Assessment of user's code}{Execution components}
   \begin{center}
     % QUESTION: how to picture it better?
     % Go further in details?
@@ -245,7 +256,7 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{User's code's assessment}{Limits}
+\begin{frame}{Assessment of user's code}{Limits}
   \begin{itemize}
   \item {
     Run on the same machine, same JVM
@@ -268,7 +279,7 @@
       Infinite thread creation
     }
     \item {
-      Storage jamming with files
+      Endless file creation
     }
     \end{itemize}
     \pause
@@ -286,7 +297,7 @@
 
 \subsection{Extraction of the execution component}
 
-\begin{frame}{User's code's assessment}{Chosen solution}
+\begin{frame}{Assessment of user's code}{Chosen solution}
   \begin{itemize}
   \item {
     Delegate the execution to workers
@@ -314,7 +325,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{User's code's assessment}{Architecture with judges}
+\begin{frame}{Assessment of user's code}{Architecture with judges}
   \begin{center}
     \begin{tikzpicture}[
       scale=1, 
@@ -369,7 +380,7 @@
 \end{frame}
 
 % TODO: Find a subtitle
-\begin{frame}{User's code's assessment}{}
+\begin{frame}{Assessment of user's code}{Pros and cons}
   \begin{itemize}
   \item {
     Pros:
@@ -392,7 +403,7 @@
 
 \subsection{Docker}
 
-\begin{frame}{User's code's assessment}{Docker}
+\begin{frame}{Assessment of user's code}{Docker}
   \begin{itemize}
   \item {
     Lightweight virtualization tool
@@ -409,7 +420,7 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{User's code's assessment}{Example of Dockerfile}
+\begin{frame}{Assessment of user's code}{Example of Dockerfile}
   \begin{itemize}
   \item {
     Dockerfiles describe how to set up the application
@@ -426,7 +437,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{User's code's assessment}{More about \emph{docker run}}
+\begin{frame}{Assessment of user's code}{More about \emph{docker run}}
   \begin{itemize}
   \item {
     Can also manage
@@ -469,7 +480,7 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{User's code's assessment}{Docker-compose}
+\begin{frame}{Assessment of user's code}{Docker-compose}
   \begin{itemize}
   \item {
     Tool to easily deploy multi-containers applications 
@@ -483,7 +494,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{User's code's assessment}{Docker in our case}
+\begin{frame}{Assessment of user's code}{Docker in our case}
   \begin{itemize}
   \item{
     Deploy easily all components
@@ -499,7 +510,6 @@
 
 \section{Result}
 
-% TODO: Current architecture
 \begin{frame}{Result}{Current architecture}
   \begin{center}
     \begin{tikzpicture}[
@@ -529,19 +539,20 @@
       %%%%%%%%%%%%%%%%%%
       % webPLMs
       %%%%%%%%%%%%%%%%%%
-      \node[block, above right=of nginx, yshift=-30] (webPLM1) { webPLM-1 };
-      \node[block, below right=of nginx, yshift=30] (webPLM2) { webPLM-2 };
-      \node[draw, densely dotted, fit=(webPLM1) (webPLM2)] {};
-      \node[fit=(webPLM1) (webPLM2)] (webPLMs) {webPLMs};
+      %\node[block, above right=of nginx, yshift=-30] (webPLM1) { webPLM-1 };
+      %\node[block, below right=of nginx, yshift=30] (webPLM2) { webPLM-2 };
+      %\node[draw, densely dotted, fit=(webPLM1) (webPLM2)] {};
+      %\node[fit=(webPLM1) (webPLM2)] (webPLMs) {webPLMs};
+      \node[block, right=of nginx] (webPLM) {webPLM};
 
       \path[<->, shorten >=3pt, shorten <=3pt]
         (user) edge (nginx)
-        (nginx) edge (webPLMs);
+        (nginx) edge (webPLM);
 
-      \node[block, right=of webPLMs] (plm-profiles) { PLM-profiles };
+      \node[block, right=of webPLM] (plm-profiles) { PLM-profiles };
 
       \path[<->, shorten >=3pt, shorten <=3pt]
-        (webPLMs.east) edge (plm-profiles.west);
+        (webPLM.east) edge (plm-profiles.west);
 
       %%%%%%%%%%%%%%%%%%
       % OAuth-providers
@@ -554,16 +565,16 @@
 
       \path[<->, shorten >=3pt, shorten <=3pt]
         (user) edge[bend right] (oauth-providers)
-        (webPLMs.south)[xshift=-10] edge[bend left] (oauth-providers.east);
+        (webPLM.south)[xshift=-10] edge[bend left] (oauth-providers.east);
 
       %%%%%%%%%%%%%%%%%%
       % Judges
       %%%%%%%%%%%%%%%%%%
-      \node[below right =0.8 of webPLMs.south, xshift=10] (mq) {\includegraphics[scale=0.3]{img/message-queue-2.png}};
+      \node[below right =0.8 of webPLM.south, xshift=10, yshift=-35] (mq) {\includegraphics[scale=0.3]{img/message-queue-2.png}};
       \node[block, below right=0.5 of mq] (judges) {Judges};
 
       \path[<->, shorten >=2pt, shorten <=2pt]
-        (webPLMs.south)[xshift=5] edge[bend right] (mq.west)
+        (webPLM.south) edge[bend right] (mq.west)
         (mq) edge[bend left] (judges);
     \end{tikzpicture}
   \end{center}
@@ -572,12 +583,15 @@
 \begin{frame}{Result}{Live-session in TELECOM Nancy}
   \begin{itemize}
   \item {
+    Used in TELECOM Nancy in September 2015
+  }
+  \item {
     30 hours of live testing with 100 students.
     \pause
   }
+  \item[~]
   \item {
     Engine is (almost) working fine...
-    \pause
   }
   \item {
     ... but user experience needs to be improved!
@@ -608,10 +622,10 @@
 \begin{frame}{Next steps}{Refactor the code}
   \begin{itemize}
   \item {
-    Rushed to release a stable version before September...
+    Rushed to release a stable version before September 2015...
   }
   \item {
-    Needed to refactor some parts of the code.
+    Needed to clean some parts of the code.
   }
   \item {
     Standardized behavior of local and server mode.
@@ -622,7 +636,7 @@
 \begin{frame}{Next steps}{Simplify workflow to adapt the content}
   \begin{itemize}
   \item {
-    Store most content inside PLM.
+    Store most of content inside PLM.
   }
   \item {
     Heavy and error prone workflow.
