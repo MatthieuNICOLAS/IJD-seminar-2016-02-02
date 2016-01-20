@@ -153,6 +153,7 @@
       \end{itemize}
       \pause
     }
+    \item[~]
     \item {
       Switch to a web application
       \begin{itemize}
@@ -285,19 +286,20 @@
 
 \subsection{Extraction of the execution component}
 
-% TODO: Finish this slide
 \begin{frame}{User's code's assessment}{Chosen solution}
   \begin{itemize}
   \item {
     Delegate the execution to workers
     \begin{itemize}
     \item Called \emph{Judges} in the litterature
+    \item Execute user's code and send back result to webPLM
     \end{itemize}
     \pause
   }
   \item {
     \emph{Let it crash} strategy
     \begin{itemize}
+    \item Prevent obvious issues with a security manager
     \item Handle timeout and crash
     \end{itemize}
     \pause
@@ -393,13 +395,13 @@
 \begin{frame}{User's code's assessment}{Docker}
   \begin{itemize}
   \item {
+    Lightweight virtualization tool
+  }
+  \item {
     Build image of your application
   }
   \item {
     Run containers based on images
-  }
-  \item {
-    Lightweight virtualization
   }
   \end{itemize}
   \begin{center}
@@ -424,7 +426,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{User's code's assessment}{More about Docker}
+\begin{frame}{User's code's assessment}{More about \emph{docker run}}
   \begin{itemize}
   \item {
     Can also manage
@@ -456,6 +458,7 @@
     }
     \end{itemize}
   }
+  \item[~]
   \item {
     Commands can become quite complex
   }
@@ -467,6 +470,17 @@
 \end{frame}
 
 \begin{frame}{User's code's assessment}{Docker-compose}
+  \begin{itemize}
+  \item {
+    Tool to easily deploy multi-containers applications 
+  }
+  \begin{center}
+    \includegraphics[scale=0.14]{img/docker-compose-2.png}
+  \end{center}
+  \item {
+    Deploy environment with \emph{docker-compose up}
+  }
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{User's code's assessment}{Docker in our case}
@@ -478,7 +492,7 @@
     Restart judges automatically
   }
   \item {
-    Hold out against users' mischiefs
+    Limit users' mischiefs
   }
   \end{itemize}
 \end{frame}
