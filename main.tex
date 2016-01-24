@@ -8,7 +8,7 @@
 % template and not specifically distribute it as part of a another
 % package/program, I grant the extra permission to freely copy and
 % modify this file as you see fit and even to delete this copyright
-% notice. 
+% notice.
 
 \documentclass{beamer}
 
@@ -154,7 +154,7 @@
   \begin{itemize}
     \item {
       Formerly a fat client
-      \begin{itemize} 
+      \begin{itemize}
         \item { Written in Java }
       \end{itemize}
       \pause
@@ -163,6 +163,7 @@
     \item {
       Switch to a web application
       \begin{itemize}
+        \item { Headless version of PLM }
         \item { Server implemented in Scala using \emph{PlayFramework} }
         \item { User interface written in Javascript using \emph{AngularJS} and \emph{Foundation} }
       \end{itemize}
@@ -180,7 +181,7 @@
 \begin{frame}{Presentation of PLM}{Application's architecture}
   \begin{center}
     \begin{tikzpicture}[
-      scale=1, 
+      scale=1,
       block/.style={
         rectangle, rounded corners=9pt,
         text width=8em,
@@ -228,7 +229,7 @@
     % QUESTION: how to picture it better?
     % Go further in details?
     \begin{tikzpicture}[
-      scale=1, 
+      scale=1,
       block/.style={
         rectangle, rounded corners=9pt,
         text width=8em,
@@ -303,6 +304,7 @@
     Delegate the execution to workers
     \begin{itemize}
     \item Called \emph{Judges} in the litterature
+    \item Use headless version of PLM as well
     \item Execute user's code and send back result to webPLM
     \end{itemize}
     \pause
@@ -328,7 +330,7 @@
 \begin{frame}{Assessment of user's code}{Architecture with judges}
   \begin{center}
     \begin{tikzpicture}[
-      scale=1, 
+      scale=1,
       block/.style={
         rectangle, rounded corners=9pt,
         text width=8em,
@@ -386,13 +388,14 @@
     Pros:
     \begin{itemize}
     \item Allow to run code without impacting webPLM's performances
-    \item Meet the scalability requirements 
+    \item Meet the scalability requirements
     \end{itemize}
     \pause
   }
   \item {
     Cons:
     \begin{itemize}
+    \item Make sure to use the right version of PLM
     \item Need to deploy them easily
     \item Should be able to reset them
     \item Have to restrict their resources usage
@@ -483,7 +486,7 @@
 \begin{frame}{Assessment of user's code}{Docker-compose}
   \begin{itemize}
   \item {
-    Tool to easily deploy multi-containers applications 
+    Tool to easily deploy multi-containers applications
   }
   \begin{center}
     \includegraphics[scale=0.14]{img/docker-compose-2.png}
@@ -649,7 +652,7 @@
   }
   \end{itemize}
 \end{frame}
-  
+
 \begin{frame}{Next steps}{Solve performance issues}
   \begin{itemize}
   \item {
