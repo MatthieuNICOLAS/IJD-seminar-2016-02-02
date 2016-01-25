@@ -1,0 +1,13 @@
+* Feedback from the rehearsal held the <2016-01-25 lun.>
+- Should talk more about *nginx*
+- Give more explanation about the couple PLM-actor / PLM-engine
+  - Use to switch quickly from the fat client to the web app
+  - Show / explain we got one instance of the couple per user 
+- More details about judges
+  - Role
+  - Pool
+- Explain why we chose to use message queues
+  - And the fact that we have one message queue for each execution result
+- Refactor first slide from /Next steps/ to show it's done since September
+- Explain that execution result is composed from several messages (result + operations)
+- Talk about the challenge of deploying a distributed environment
