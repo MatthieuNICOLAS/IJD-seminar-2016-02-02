@@ -199,7 +199,12 @@
 
       \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
 
-      \node[block, right=1.5 of user] (webPLM) { webPLM };
+      \node[right=3 of user] (center-webPLMs) {};
+      \node[block, above=0.3 of center-webPLMs] (webPLM) { webPLM };
+      \node[block, below=0.3 of center-webPLMs] (webPLM-local) { webPLM-local };
+      \node[draw, densely dotted, fit=(webPLM) (webPLM-local)] (webPLMs) { webPLMs};
+
+      \node[block, right=of webPLMs] (plm-data) { PLM-data };
 
       % OAuth-providers
       \node[oauth, scale=0.5, below=1.5 of user] (plm-accounts) { PLM-accounts };
@@ -211,10 +216,11 @@
       \node[block, right=5 of oauth-providers] (plm-profiles) { PLM-profiles };
 
       \path[<->, shorten >=3pt, shorten <=3pt]
-        (user) edge (webPLM)
+        (user) edge (webPLMs)
         (user) edge node[left, scale=0.6] {authentificate} (oauth-providers)
-        (webPLM) edge[bend right] node[above right, align=center, xshift=-5, scale=0.6] {retrieve user's \\ preferences} (plm-profiles.west)
-        (webPLM) edge[bend left] node[below right, align=center, yshift=-15, xshift=-25, scale=0.6]  {validate \\ authentification} (oauth-providers.east);
+        (webPLMs) edge (plm-data)
+        (webPLMs) edge[bend right] node[above right, align=center, xshift=-5, scale=0.6] {retrieve user's \\ preferences} (plm-profiles.west)
+        (webPLMs) edge[bend left] node[below right, align=center, yshift=-15, xshift=-25, scale=0.6]  {validate \\ authentification} (oauth-providers.east);
 
     \end{tikzpicture}
   \end{center}
@@ -381,7 +387,6 @@
   \end{center}
 \end{frame}
 
-% TODO: Find a subtitle
 \begin{frame}{Assessment of user's code}{Pros and cons}
   \begin{itemize}
   \item {
@@ -397,7 +402,7 @@
     \begin{itemize}
     \item Make sure to use the right version of PLM
     \item Need to deploy them easily
-    \item Should be able to reset them
+    \item Should restart them after each execution
     \item Have to restrict their resources usage
     \end{itemize}
   }
@@ -602,7 +607,7 @@
   \end{itemize}
 \end{frame}
 
-% TODO: think of a transition between these 2 slides
+% TODO: Think of a transition between these 2 slides
 
 \begin{frame}{Result}{Live-session in TELECOM Nancy}
   \begin{itemize}
