@@ -315,21 +315,6 @@
     \end{itemize}
     \pause
   }
-  \item {
-    \emph{Let it crash} strategy
-    \begin{itemize}
-    \item Prevent obvious issues with a security manager
-    \item Handle timeout and crash
-    \end{itemize}
-    \pause
-  }
-  \item {
-    Distribute workload using message queues
-    \begin{itemize}
-    \item One queue for requests
-    \item One queue per result
-    \end{itemize}
-  }
   \end{itemize}
 \end{frame}
 
@@ -362,10 +347,10 @@
       \node[below=1.5 of plm-actor] (center-mq) {};
 
       \node[right=0.05 of center-mq] (requests-mq) { \includegraphics[angle=-90, scale=0.3]{img/message-queue-2.png} };
-      \node[right=0.05 of center-mq, xshift=20] {\tiny Requests MQ};
+      \node[right=0.05 of center-mq, xshift=20] {\tiny \textbf{Requests}};
 
       \node[left=0.05 of center-mq] (reply-mq) { \includegraphics[angle=90, scale=0.3]{img/message-queue-2.png} };
-      \node[left=0.05 of center-mq, xshift=-20] {\tiny Reply MQ};
+      \node[left=0.05 of center-mq, xshift=-20] {\tiny \textbf{Reply}};
 
       \node[judge, below=1.5 of center-mq] (judge1) {Judge 1};
       \node[judge, right=of judge1] (judge2) {Judge 2};
@@ -385,6 +370,27 @@
         (reply-mq.north) edge[bend left] node[left] {\tiny retrieve result} (plm-actor.south);
     \end{tikzpicture}
   \end{center}
+\end{frame}
+
+\begin{frame}{Assessment of user's code}{Implementation}
+  \begin{itemize}
+  \item {
+    Distribute workload using message queues
+    \begin{itemize}
+    \item One queue for requests
+    \item One queue per result
+    \end{itemize}
+    \pause
+  }
+  \item[~]
+  \item {
+    \emph{Let it crash} strategy
+    \begin{itemize}
+    \item Prevent obvious issues with a security manager
+    \item Handle timeout and crash
+    \end{itemize}
+  }
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Assessment of user's code}{Pros and cons}
@@ -445,6 +451,34 @@
   \end{itemize}
 \end{frame}
 
+{ % all template changes are local to this group.
+  \setbeamertemplate{navigation symbols}{}
+  \begin{frame}[plain]
+      \begin{tikzpicture}[remember picture,overlay]
+          \node[at=(current page.center)] {
+              \includegraphics[width=\paperwidth]{img/dockerfile.png}
+          };
+      \end{tikzpicture}
+  \end{frame}
+}
+
+\begin{frame}{Assessment of user's code}{Example of Dockerfile}
+  \begin{itemize}
+  \item {
+    Dockerfiles describe how to set up the application
+  }
+  \begin{center}
+    \includegraphics[scale=0.12]{img/dockerfile.png}
+  \end{center}
+  \item {
+    Run \emph{docker build \textcolor{red}{-t tag} \textcolor{blue}{/path/to/Dockerfile}} to build  the image
+  }
+  \item {
+    Start containers with \emph{docker run \textcolor{red}{tag}}
+  }
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{Assessment of user's code}{More about \emph{docker run}}
   \begin{itemize}
   \item {
@@ -487,6 +521,31 @@
   }
   \end{center}
 \end{frame}
+
+\begin{frame}{Assessment of user's code}{Docker-compose}
+  \begin{itemize}
+  \item {
+    Tool to easily deploy multi-containers applications
+  }
+  \begin{center}
+    \includegraphics[scale=0.14]{img/docker-compose-2.png}
+  \end{center}
+  \item {
+    Deploy environment with \emph{docker-compose up}
+  }
+  \end{itemize}
+\end{frame}
+
+{ % all template changes are local to this group.
+  \setbeamertemplate{navigation symbols}{}
+  \begin{frame}[plain]
+      \begin{tikzpicture}[remember picture,overlay]
+          \node[at=(current page.center)] {
+              \includegraphics[width=\paperwidth]{img/docker-compose-2.png}
+          };
+      \end{tikzpicture}
+  \end{frame}
+}
 
 \begin{frame}{Assessment of user's code}{Docker-compose}
   \begin{itemize}
