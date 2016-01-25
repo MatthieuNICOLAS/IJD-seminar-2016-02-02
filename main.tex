@@ -200,9 +200,9 @@
       \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
 
       \node[right=3 of user] (center-webPLMs) {};
-      \node[block, above=0.3 of center-webPLMs] (webPLM) { webPLM };
+      \node[block, above=0.3 of center-webPLMs] (webPLM) { webPLM-central };
       \node[block, below=0.3 of center-webPLMs] (webPLM-local) { webPLM-local };
-      \node[draw, densely dotted, fit=(webPLM) (webPLM-local)] (webPLMs) { webPLMs};
+      \node[draw, densely dotted, fit=(webPLM) (webPLM-local)] (webPLMs) {};
 
       \node[block, right=of webPLMs] (plm-data) { PLM-data };
 
@@ -557,10 +557,12 @@
         (user) edge (nginx)
         (nginx) edge (webPLM);
 
-      \node[block, right=of webPLM] (plm-profiles) { PLM-profiles };
+      \node[block, right=of webPLM] (plm-data) { PLM-data };
+      \node[block, below=0.6 of plm-data] (plm-profiles) { PLM-profiles };
 
       \path[<->, shorten >=3pt, shorten <=3pt]
-        (webPLM.east) edge (plm-profiles.west);
+        (webPLM) edge (plm-data)
+        (webPLM) edge[bend right] (plm-profiles);
 
       %%%%%%%%%%%%%%%%%%
       % OAuth-providers
@@ -578,7 +580,7 @@
       %%%%%%%%%%%%%%%%%%
       % Judges
       %%%%%%%%%%%%%%%%%%
-      \node[below right =0.8 of webPLM.south, xshift=10, yshift=-35] (mq) {\includegraphics[scale=0.3]{img/message-queue-2.png}};
+      \node[below right=1 of webPLM.south, xshift=10, yshift=-35] (mq) {\includegraphics[scale=0.3]{img/message-queue-2.png}};
       \node[block, below right=0.5 of mq] (judges) {Judges};
 
       \path[<->, shorten >=2pt, shorten <=2pt]
