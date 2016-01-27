@@ -152,33 +152,6 @@
   \end{center}
 \end{frame}
 
-% TODO: Make this slide sexier
-\begin{frame}{Presentation of PLM}{Evolution of the project}
-  \begin{itemize}
-    \item {
-      Formerly a fat client
-      \begin{itemize}
-        \item { Written in Java }
-      \end{itemize}
-      \pause
-    }
-    \item[~]
-    \item {
-      Switch to a web application
-      \begin{itemize}
-        \item { Headless version of PLM: PLM-engine }
-        \item { Server implemented in Scala using \emph{PlayFramework} }
-        \item { User interface written in Javascript using \emph{AngularJS} and \emph{Foundation} }
-      \end{itemize}
-    }
-  \end{itemize}
-  \begin{center}
-    \includegraphics[scale=0.05]{img/play-logo.png}
-    ~
-    \includegraphics[scale=0.1]{img/foundation-angular.png}
-  \end{center}
-\end{frame}
-
 \subsection{Architecture}
 
 \begin{frame}{Presentation of PLM}{Application's architecture}
@@ -226,11 +199,84 @@
   \end{center}
 \end{frame}
 
-\section{Assessment of user's code}
+\section{To a web app}
 
-\subsection{Challenges}
+\subsection{Goals}
 
-\begin{frame}{Assessment of user's code}{Execution components}
+\begin{frame}{To a web app}{Evolution of the project}
+  \begin{itemize}
+    \item {
+      Formerly a fat client
+      \begin{itemize}
+        \item { Written in Java }
+      \end{itemize}
+      \pause
+    }
+    \item[~]
+    \item {
+      Switch to a web application
+      \begin{itemize}
+        \item { Server implemented in Scala using \emph{PlayFramework} }
+        \item { User interface written in Javascript using \emph{AngularJS} and \emph{Foundation} }
+      \end{itemize}
+    }
+  \end{itemize}
+  \begin{center}
+    \includegraphics[scale=0.05]{img/play-logo.png}
+    ~
+    \includegraphics[scale=0.1]{img/foundation-angular.png}
+  \end{center}
+\end{frame}
+
+% TODO: Complete slide and find a better title
+% Add item about making it easier to access to PLM and to try it
+\begin{frame}{To a web app}{Motivations}
+  \begin{itemize}
+  \item {
+    More user-friendly
+  }
+  \item {
+    Aim to setup SPOC\footnote{Small Private Online Course} and MOOC\footnote{Massive Open Online Course}
+  }
+  \item[~]
+  \item {
+    But don't have the time and means for a reboot
+  }
+  \end{itemize}
+\end{frame}
+
+% TODO: Find better title
+\subsection{How?}
+
+% TODO: Too many items on this slide, remove some
+\begin{frame}{To a web app}{Chosen solution}
+  \begin{itemize}
+  \item {
+    Implemented a headless version of PLM: \emph{PLM-engine}
+    \begin{itemize}
+    \item Provide all PLM's content and methods
+    \item But without a user interface
+    \item Need to 
+    \end{itemize}
+  }
+  \item {
+    Designed a communication protocol between the server and the client
+    \begin{itemize}
+    \item User's actions are sent to server as JSON messages
+    \end{itemize}
+  }
+  \item {
+    Only need to implement an interpreter
+    \begin{itemize}
+    \item Parse and messages received from the client
+    \item Query or command PLM-engine according to the message
+    \item Send back result or ack to the client
+    \end{itemize}
+  }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{To a web app}{Interactions between components}
   \begin{center}
     % QUESTION: how to picture it better?
     % Go further in details?
@@ -262,6 +308,10 @@
     \end{tikzpicture}
   \end{center}
 \end{frame}
+
+\section{Assessment of user's code}
+
+\subsection{Challenges}
 
 \begin{frame}{Assessment of user's code}{Limits}
   \begin{itemize}
