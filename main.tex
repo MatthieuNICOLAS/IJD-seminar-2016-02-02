@@ -245,36 +245,41 @@
   \end{itemize}
 \end{frame}
 
-% TODO: Find better title
-\subsection{How?}
+\subsection{PLM as library}
 
-% TODO: Too many items on this slide, remove some
-\begin{frame}{To a web app}{Chosen solution}
+% TODO: Add schema of PLM's components
+\begin{frame}{To a web app}{Refactoring PLM}
   \begin{itemize}
   \item {
     Implemented a headless version of PLM: \emph{PLM-engine}
     \begin{itemize}
     \item Provide all PLM's content and methods
     \item But without a user interface
-    \item Need to 
     \end{itemize}
   }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{To a web app}{Implementing the server}
+  \begin{itemize}
   \item {
     Designed a communication protocol between the server and the client
     \begin{itemize}
-    \item User's actions are sent to server as JSON messages
+    \item User's actions sent to server as JSON messages
     \end{itemize}
   }
   \item {
     Only need to implement an interpreter
     \begin{itemize}
-    \item Parse and messages received from the client
+    \item Parse messages received from the client
     \item Query or command PLM-engine according to the message
-    \item Send back result or ack to the client
+    \item Send back result or acknowledgement to the client
     \end{itemize}
   }
   \end{itemize}
 \end{frame}
+
+\subsection{Outcome}
 
 \begin{frame}{To a web app}{Interactions between components}
   \begin{center}
@@ -301,12 +306,25 @@
       \node[below=0.1 of webPLM] {webPLM};
 
       \path[->, shorten >=2pt, shorten <=2pt]
-        (user) edge node[sloped, anchor=center, above] {\tiny request execution} (plm-actor)
-        (plm-actor) edge node[sloped, anchor=center, above] {\tiny start execution} (plm-engine)
-        ([yshift=-0.2 cm]plm-engine.west) edge node[sloped, anchor=center, below] {\tiny send results} ([yshift=-0.2 cm]plm-actor.east)
-        ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay results} ([yshift=-0.2 cm]user.east);
+        (user) edge node[sloped, anchor=center, above] {\tiny user's action} (plm-actor)
+        (plm-actor) edge node[sloped, anchor=center, above] {\tiny query / command} (plm-engine)
+        ([yshift=-0.2 cm]plm-engine.west) edge node[sloped, anchor=center, below] {\tiny send result} ([yshift=-0.2 cm]plm-actor.east)
+        ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-0.2 cm]user.east);
     \end{tikzpicture}
   \end{center}
+\end{frame}
+
+% TODO: Find a better subtitle
+% TODO: Complete this slide
+\begin{frame}{To a web app}{Results}
+  \begin{itemize}
+  \item {
+    Build quickly a web application from the fat client...
+  }
+  \item {
+    ... but can't share common ressources among users
+  }
+  \end{itemize}
 \end{frame}
 
 \section{Assessment of user's code}
