@@ -245,7 +245,7 @@
   \end{itemize}
 \end{frame}
 
-\subsection{PLM as library}
+\subsection{PLM as a library}
 
 % TODO: Add schema of PLM's components
 \begin{frame}{To a web app}{Refactoring PLM}
@@ -372,16 +372,47 @@
 
 \subsection{Extraction of the execution component}
 
-\begin{frame}{Assessment of user's code}{Chosen solution}
+\begin{frame}{Assessment of user's code}{Delegate execution to workers}
   \begin{itemize}
+  \item Called \emph{Judges} in the litterature
+  \item Use PLM-engine as well
+  \item[~]
   \item {
-    Delegate the execution to workers
+    Workflow:
     \begin{itemize}
-    \item Called \emph{Judges} in the litterature
-    \item Use PLM-engine as well
-    \item Execute user's code and send back result to webPLM
+    \item Retrieve an execution request
+    \item Parse the request to extract parameters
+    \item Configure PLM-engine according to them
+    \item Run the user's code
+    \item Send back result to webPLM
     \end{itemize}
   }
+  \end{itemize}
+\end{frame}
+
+% TODO: Describe message queue
+\begin{frame}{Assessment of user's code}{Message queues}
+  \begin{itemize}
+    \item {
+      Message-driven architecture
+    }
+    % TODO: "Découplage des composants"
+    \item {
+      Help to implement:
+      \begin{itemize}
+        \item Producer/Consumer pattern
+        \item \alert<2> {Request/Response pattern}
+      \end{itemize}
+    }
+    \item {
+      % TODO: Rephrase
+      Different reliability patterns of the message processing:
+      \begin{itemize}
+        \item \alert<2> {Only one worker}
+        \item At least one worker
+        \item All workers
+      \end{itemize}
+    }
   \end{itemize}
 \end{frame}
 
@@ -439,27 +470,6 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{Assessment of user's code}{Implementation}
-  \begin{itemize}
-  \item {
-    Distribute workload using message queues
-    \begin{itemize}
-    \item One queue for requests
-    \item One queue per result
-    \end{itemize}
-    \pause
-  }
-  \item[~]
-  \item {
-    \emph{Let it crash} strategy
-    \begin{itemize}
-    \item Prevent obvious issues with a security manager
-    \item Handle timeout and crash
-    \end{itemize}
-  }
-  \end{itemize}
-\end{frame}
-
 \begin{frame}{Assessment of user's code}{Pros and cons}
   \begin{itemize}
   \item {
@@ -470,10 +480,11 @@
     \end{itemize}
     \pause
   }
+  \item[~]
   \item {
     Cons:
     \begin{itemize}
-    \item Make sure to use the right version of PLM
+    \item Make sure to use the right version of PLM-engine
     \item Need to deploy them easily
     \item Should restart them after each execution
     \item Have to restrict their resources usage
@@ -776,13 +787,13 @@
 \begin{frame}{Next steps}{Simplify workflow to adapt the content}
   \begin{itemize}
   \item {
-    Store most of content inside PLM
+    Store most of content inside PLM-engine
   }
   \item {
     Heavy and error prone workflow
   }
   \item {
-    Need to extract the content from PLM's jar
+    Need to extract the content from PLM-engine's jar
   }
   \item {
     Allow to implement an exercise editor
@@ -798,6 +809,17 @@
   \item {
     Perform some load testing to identify the bottleneck
   }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Next steps}{}
+  \begin{itemize}
+  \item Integrate interns' contributions
+  \item Set up Continuous Deployment
+  \item Support additional programming languages
+  \item Implement a debug mode similar to popular IDEs' ones
+  \item Add features to help teachers to supervise their students
+  \item ...
   \end{itemize}
 \end{frame}
 
