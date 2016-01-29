@@ -227,10 +227,16 @@
   \end{center}
 \end{frame}
 
-% TODO: Complete slide and find a better title
-% Add item about making it easier to access to PLM and to try it
 \begin{frame}{To a web app}{Motivations}
   \begin{itemize}
+  \item {
+    Want to switch to SaaS\footnote{Software as a Service}
+    \begin{itemize}
+    \item Easy to use
+    \item Easy to update
+    \item Easy to track usage data
+    \end{itemize}
+  }
   \item {
     More user-friendly
   }
@@ -262,16 +268,13 @@
 \begin{frame}{To a web app}{Implementing the server}
   \begin{itemize}
   \item {
-    Designed a communication protocol between the server and the client
-    \begin{itemize}
-    \item User's actions sent to server as JSON messages
-    \end{itemize}
+    Designed an API over PLM-engine
   }
   \item {
-    Only need to implement an interpreter
+    Only need to implement a controller
     \begin{itemize}
-    \item Parse messages received from the client
-    \item Query or command PLM-engine according to the message
+    \item Verify calls received from the client
+    \item Query or command PLM-engine according to the call
     \item Send back result or acknowledgement to the client
     \end{itemize}
   }
@@ -302,10 +305,10 @@
       \node[block, right=2 of plm-actor] (plm-engine) { PLM-engine };
 
       \node[draw, densely dotted, fit=(plm-actor) (plm-engine)] (webPLM) {};
-      \node[below=0.1 of webPLM] {webPLM};
+      \node[below=0.1 of webPLM] {webPLM-server};
 
       \path[->, shorten >=2pt, shorten <=2pt]
-        (user) edge node[sloped, anchor=center, above] {\tiny user's action} (plm-actor)
+        (user) edge node[sloped, anchor=center, above] {\tiny API call} (plm-actor)
         (plm-actor) edge node[sloped, anchor=center, above] {\tiny query / command} (plm-engine)
         ([yshift=-0.2 cm]plm-engine.west) edge node[sloped, anchor=center, below] {\tiny send result} ([yshift=-0.2 cm]plm-actor.east)
         ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-0.2 cm]user.east);
@@ -324,6 +327,41 @@
     ... but can't share common ressources among users
   }
   \end{itemize}
+\end{frame}
+
+\begin{frame}{To a web app}{Multi-user scenario}
+  \begin{center}
+    \begin{tikzpicture}[
+      scale=1,
+      block/.style={
+        rectangle, rounded corners=9pt,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        draw=black!50,
+        fill=black!20
+      }
+    ]
+      \node (ref) {};
+
+      \foreach \x [evaluate=\x as \dist using 1.5*\x-1] in {1,...,3}
+      {
+        \node[below=\dist of ref] (user-\x) { \includegraphics[scale=0.05]{img/user-\x.pdf} };
+
+        \node[block, right=2 of user-\x] (plm-actor-\x) { PLM-actor };
+        \node[block, right=2 of plm-actor-\x] (plm-engine-\x) { PLM-engine };
+
+        \path[->, shorten >=2pt, shorten <=2pt]
+          (user-\x) edge node[sloped, anchor=center, above] {\tiny API call} (plm-actor-\x)
+          (plm-actor-\x) edge node[sloped, anchor=center, above] {\tiny query / command} (plm-engine-\x)
+          ([yshift=-0.2 cm]plm-engine-\x.west) edge node[sloped, anchor=center, below] {\tiny send result} ([yshift=-0.2 cm]plm-actor-\x.east)
+          ([yshift=-0.2 cm]plm-actor-\x.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-0.2 cm]user-\x.east);
+      }
+
+      \node[draw, densely dotted, fit=(plm-actor-1) (plm-engine-1) (plm-actor-2) (plm-engine-2) (plm-actor-3) (plm-engine-3)] (webPLM) {};
+      \node[below=0.1 of webPLM] {webPLM-server};
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \section{Assessment of user's code}
@@ -395,7 +433,7 @@
     \item {
       Message-driven architecture
     }
-    % TODO: "Découplage des composants"
+    % TODO: Add item "Découplage des composants"
     \item {
       Help to implement:
       \begin{itemize}
