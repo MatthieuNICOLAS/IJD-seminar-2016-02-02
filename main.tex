@@ -250,7 +250,7 @@
   \end{itemize}
 \end{frame}
 
-\subsection{PLM as a library}
+\subsection{Server-side}
 
 \begin{frame}{To a web app}{Refactoring PLM}
   \begin{itemize}
@@ -293,8 +293,6 @@
   }
   \end{itemize}
 \end{frame}
-
-\subsection{Outcome}
 
 \begin{frame}{To a web app}{Interactions between components}
   \begin{center}
@@ -374,6 +372,8 @@
   }
   \end{itemize}
 \end{frame}
+
+\subsection{Client-side}
 
 % TODO: Find a subtitle
 \begin{frame}{To a web app}{}
@@ -464,7 +464,53 @@
 
 \subsection{Extraction of the execution component}
 
-\begin{frame}{Assessment of user's code}{Delegate execution to workers}
+\begin{frame}{Assessment of user's code}{Chosen solution}
+  \begin{itemize}
+    \item Delegate execution to workers
+  \end{itemize}
+  \begin{center}
+    \begin{tikzpicture}[
+      scale=1,
+      block/.style={
+        rectangle, rounded corners=9pt,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        draw=black!50,
+        fill=black!20
+      },
+      judge/.style={
+        block,
+        text width=4em
+      }
+    ]
+
+      \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
+
+      \node[block, right=2 of user] (plm-actor) { PLM-actor };
+      \node[block, right=2 of plm-actor] (plm-engine) { PLM-engine };
+
+      \node[draw, densely dotted, fit=(plm-actor) (plm-engine)] (webPLM) {};
+      \node[above=0.1 of webPLM] {webPLM-server};
+
+      \node[judge, below=2 of webPLM] (judge) {Worker 2};
+      \node[right=of judge] (judge-2) {...};
+      \node[judge, left=of judge] (judge-3) {Worker 1};
+      \node[draw, densely dotted, fit=(judge-2) (judge) (judge-3)] (judges) {};
+      \node[below=0.1 of judges] {Workers};
+
+      \path[->, shorten >=2pt, shorten <=2pt]
+        (user) edge node[sloped, anchor=center, above] {\tiny API call} (plm-actor)
+        (plm-actor) edge node[sloped, anchor=center, above] {\tiny query / command} (plm-engine)
+        ([yshift=-0.2 cm]plm-engine.west) edge node[sloped, anchor=center, below] {\tiny send result} ([yshift=-0.2 cm]plm-actor.east)
+        ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-0.2 cm]user.east)
+        ([xshift=3]webPLM.south) edge node[right] {\tiny delegate execution} ([xshift=20]judges.north)
+        ([xshift=14]judges.north) edge node[left] {\tiny send result} ([xshift=-3]webPLM.south);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Assessment of user's code}{The judges}
   \begin{itemize}
   \item Called \emph{Judges} in the litterature
   \item Use PLM-engine as well
@@ -835,6 +881,9 @@
 \begin{frame}{Result}{Live-session in TELECOM Nancy}
   \begin{itemize}
   \item {
+    Rushed to release a stable version before the start of the school year
+  }
+  \item {
     Used in TELECOM Nancy in September 2015
   }
   \item {
@@ -873,21 +922,18 @@
   \end{itemize}
 \end{frame}
 
-\section{Next steps}
-
-\begin{frame}{Next steps}{Refactor the code}
+\begin{frame}{Result}{Refactor the code}
   \begin{itemize}
   \item {
-    Rushed to release a stable version before September 2015...
-  }
-  \item {
-    Needed to clean some parts of the code
+    Needed to clean some parts of the code before further building
   }
   \item {
     Merged local and centralized mode branches
   }
   \end{itemize}
 \end{frame}
+
+\section{Next steps}
 
 \begin{frame}{Next steps}{Simplify workflow to adapt the content}
   \begin{itemize}
@@ -917,8 +963,7 @@
   \end{itemize}
 \end{frame}
 
-% TODO: Add subtitle
-\begin{frame}{Next steps}{}
+\begin{frame}{Next steps}{Sneak peek from the TODO list}
   \begin{itemize}
   \item Integrate interns' contributions
   \item Set up Continuous Deployment
