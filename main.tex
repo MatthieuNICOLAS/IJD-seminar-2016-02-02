@@ -12,7 +12,7 @@
 
 \documentclass{beamer}
 
-\usepackage{tikz}
+\usepackage{tikz, tikz-uml}
 \usetikzlibrary{automata, matrix,shapes.multipart,shapes.geometric,fit,scopes,positioning}
 
 \definecolor{blue-base}{RGB}{42, 79, 110}
@@ -252,7 +252,6 @@
 
 \subsection{PLM as a library}
 
-% TODO: Add schema of PLM's components
 \begin{frame}{To a web app}{Refactoring PLM}
   \begin{itemize}
   \item {
@@ -263,6 +262,20 @@
     \end{itemize}
   }
   \end{itemize}
+  \begin{center}
+    \begin{tikzpicture}
+
+      \umlemptyclass{Game}
+      \umlemptyclass[x=4, y=-2]{Lesson}
+      \umlemptyclass[x=8, y=-4]{Exercise}
+
+      \umlunicompo[arg2=lessons]{Game}{Lesson}
+      \umlunicompo[arg2=exercises]{Lesson}{Exercise}
+      \umluniassoc[geometry=|-, anchor1=-60, arg2=currentLesson]{Game}{Lesson}
+      \umluniassoc[geometry=|-, anchor1=-120, arg2=currentExercise]{Game}{Exercise}
+
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}{To a web app}{Implementing the server}
@@ -285,8 +298,6 @@
 
 \begin{frame}{To a web app}{Interactions between components}
   \begin{center}
-    % QUESTION: how to picture it better?
-    % Go further in details?
     \begin{tikzpicture}[
       scale=1,
       block/.style={
@@ -427,13 +438,17 @@
   \end{itemize}
 \end{frame}
 
-% TODO: Describe message queue
 \begin{frame}{Assessment of user's code}{Message queues}
   \begin{itemize}
     \item {
       Message-driven architecture
     }
-    % TODO: Add item "Découplage des composants"
+    \item {
+      Loosely coupled system
+    }
+    \item {
+      \alert<2> {Asynchronous}/Synchronous 
+    }
     \item {
       Help to implement:
       \begin{itemize}
@@ -442,13 +457,15 @@
       \end{itemize}
     }
     \item {
-      % TODO: Rephrase
       Different reliability patterns of the message processing:
       \begin{itemize}
         \item \alert<2> {Only one worker}
         \item At least one worker
         \item All workers
       \end{itemize}
+    }
+    \item {
+      Easy to scale
     }
   \end{itemize}
 \end{frame}
