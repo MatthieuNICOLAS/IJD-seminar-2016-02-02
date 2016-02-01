@@ -367,11 +367,55 @@
 \begin{frame}{To a web app}{Results}
   \begin{itemize}
   \item {
-    Build quickly a web application from the fat client...
+    Build quickly a web server from the fat client...
   }
   \item {
-    ... but can't share common ressources among users
+    ... but we also need a user interface
   }
+  \end{itemize}
+\end{frame}
+
+% TODO: Find a subtitle
+\begin{frame}{To a web app}{}
+  \begin{center}
+    \begin{tikzpicture}[
+      scale=1,
+      block/.style={
+        rectangle, rounded corners=9pt,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        draw=black!50,
+        fill=black!20
+      }
+    ]
+
+      \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
+      \node[right=0.1 of user] (browser) { \includegraphics[scale=0.015]{img/firefox.png} };
+      \node[block, right=1.5 of browser, text width=2em] (UI) {UI};
+
+      \node[block, right=1.5 of UI, text width=4em] (plm-actor) { PLM-actor };
+      \node[block, right=2 of plm-actor, text width=4em](plm-engine) { PLM-engine };
+
+      \node[draw, densely dotted, fit=(plm-actor) (plm-engine)] (webPLM) {};
+      \node[below=0.1 of webPLM] {webPLM-server};
+
+      \path[->, shorten >=2pt, shorten <=2pt]
+        (browser) edge node[sloped, anchor=center, above] {\tiny user's action} (UI)
+        (UI) edge node[sloped, anchor=center, above] {\tiny API call} (plm-actor)
+        (plm-actor) edge node[sloped, anchor=center, above] {\tiny query / command} (plm-engine)
+        ([yshift=-0.2 cm]plm-engine.west) edge node[sloped, anchor=center, below] {\tiny send result} ([yshift=-0.2 cm]plm-actor.east)
+        ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-0.2 cm]UI.east)
+        ([yshift=-0.2 cm]UI.west) edge node[sloped, anchor=center, below] {\tiny update view} ([yshift=-0.2 cm]browser.east);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+% TODO: Find a subtitle
+\begin{frame}{To a web app}
+  \begin{itemize}
+    \item Have to translate user's actions into API calls
+    \item Have to re-implement PLM-engine's data models
   \end{itemize}
 \end{frame}
 
@@ -501,12 +545,14 @@
       \node[right=0.5 of center-mq] (requests-mq) { \includegraphics[angle=-90, scale=0.3]{img/message-queue-2.png} };
       \node[right=0.5 of center-mq, xshift=20] {\tiny \textbf{Requests}};
 
+      \node[right=0.5 of requests-mq] (center-mq-2) {};
+
       \node[left=0.5 of center-mq] (reply-mq) { \includegraphics[angle=90, scale=0.3]{img/message-queue-2.png} };
       \node[left=0.5 of center-mq, xshift=-20] {\tiny \textbf{Reply}};
-      \node[right=2.5 of center-mq, opacity=0.6] (reply-mq-2) { \includegraphics[angle=90, scale=0.3]{img/message-queue-2.png} };
+      \node[right=0.5 of center-mq-2, opacity=0.6] (reply-mq-2) { \includegraphics[angle=90, scale=0.3]{img/message-queue-2.png} };
 
       \node[judge, below=1.5 of center-mq] (judge1) {Judge 1};
-      \node[judge, right=0.5 of judge1] (judge2) {Judge 2};
+      \node[judge, below=1.5 of center-mq-2] (judge2) {Judge 2};
       \node[right=0.5 of judge2] (judge3) {...};
 
       \node[draw, densely dotted, fit=(judge1) (judge2) (judge3)] {};
@@ -871,6 +917,7 @@
   \end{itemize}
 \end{frame}
 
+% TODO: Add subtitle
 \begin{frame}{Next steps}{}
   \begin{itemize}
   \item Integrate interns' contributions
