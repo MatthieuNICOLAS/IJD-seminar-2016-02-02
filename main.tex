@@ -19,7 +19,9 @@
 \definecolor{purple-custom}{RGB}{54, 51, 119}
 \definecolor{orange-custom}{RGB}{227, 164, 79}
 \definecolor{yellow-custom}{RGB}{170, 142, 57}
-
+\definecolor{green-user}{HTML}{b0cb1f}
+\definecolor{blue-user}{HTML}{008dd2}
+\definecolor{red-user}{HTML}{e31e24}
 % There are many different themes available for Beamer. A comprehensive
 % list with examples is given here:
 % http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
@@ -336,6 +338,18 @@
         minimum height=3em,
         draw=black!50,
         fill=black!20
+      },
+      user1/.style={
+        block,
+        fill=blue-user
+      },
+      user2/.style={
+        block,
+        fill=red-user
+      },
+      user3/.style={
+        block,
+        fill=green-user
       }
     ]
       \node (ref) {};
@@ -344,8 +358,8 @@
       {
         \node[below=\dist of ref] (user-\x) { \includegraphics[scale=0.05]{img/user-\x.pdf} };
 
-        \node[block, right=2 of user-\x] (plm-actor-\x) { PLM-actor };
-        \node[block, right=2 of plm-actor-\x] (plm-engine-\x) { PLM-engine };
+        \node[user\x, right=2 of user-\x] (plm-actor-\x) { PLM-actor };
+        \node[user\x, right=2 of plm-actor-\x] (plm-engine-\x) { PLM-engine };
 
         \path[->, shorten >=2pt, shorten <=2pt]
           (user-\x) edge node[sloped, anchor=center, above] {\tiny API call} (plm-actor-\x)
@@ -935,17 +949,77 @@
 
 \section{Next steps}
 
-\begin{frame}{Next steps}{Simplify workflow to adapt the content}
+\begin{frame}{Next steps}{Extract components from PLM-engine}
   \begin{itemize}
   \item {
-    Store most of content inside PLM-engine
+    Most components are inside PLM-engine
+  }
+  \item {
+    Updating PLM-engine $\,\to\,$ new version of webPLM and Judge
   }
   \item {
     Heavy and error prone workflow
   }
-  \item {
-    Need to extract the content from PLM-engine's jar
-  }
+  \end{itemize}
+  \begin{center}
+    \begin{tikzpicture}[
+      scale=1,
+      block/.style={
+        rectangle, rounded corners=9pt,
+        text width=6em,
+        text centered,
+        minimum height=2em,
+        draw=black!50,
+        fill=black!20
+      },
+      user1/.style={
+        block,
+        fill=blue-user
+      },
+      user2/.style={
+        block,
+        fill=green-user
+      }
+    ]
+
+      \node[block] (lessons-actor) {Lessons\\actor};
+      \node[block, right=of lessons-actor] (exercises-actor) {Exercises\\actor};
+      \node[block, right=1.5 of exercises-actor] (plm-engine) {PLM\\engine};
+
+      \node[above left=0.5 of lessons-actor] (user-1) { \includegraphics[scale=0.05]{img/user.pdf} };
+      \node[user1, right=2 of user-1] (plm-actor-1) { PLM\\actor };
+      \node[user1, right=2 of plm-actor-1] (execution-actor-1) {Execution\\actor};
+
+      \path[->, shorten >=2pt, shorten <=2pt]
+        ([yshift=3]user-1.east) edge node[sloped, anchor=center, above] {\tiny API call} ([yshift=3]plm-actor-1.west)
+        ([yshift=3]plm-actor-1.east) edge node[sloped, anchor=center, above] {\tiny command} ([yshift=3]execution-actor-1.west)
+        ([yshift=-3]execution-actor-1.west) edge node[sloped, anchor=center, below] {\tiny send result} ([yshift=-3]plm-actor-1.east)
+        ([yshift=-3]plm-actor-1.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-3]user-1.east)
+        (exercises-actor) edge node[align=center, scale=0.6] {use data\\models} (plm-engine);
+
+      \path[<->, shorten >=2pt, shorten <=2pt]
+        (plm-actor-1.south) edge (exercises-actor)
+        (plm-actor-1.south) edge (lessons-actor)
+        (execution-actor-1) edge (plm-engine);
+
+      \node[below left=0.5 of lessons-actor] (user-2) { \includegraphics[scale=0.05]{img/user-3.pdf} };
+
+      \node[user2, right=2 of user-2] (plm-actor-2) { PLM\\actor };
+      \node[user2, right=2 of plm-actor-2] (execution-actor-2) {Execution\\actor};
+
+      \path[->, shorten >=2pt, shorten <=2pt]
+        ([yshift=3]user-2.east) edge ([yshift=3]plm-actor-2.west)
+        ([yshift=3]plm-actor-2.east) edge ([yshift=3]execution-actor-2.west)
+        ([yshift=-3]execution-actor-2.west) edge ([yshift=-3]plm-actor-2.east)
+        ([yshift=-3]plm-actor-2.west) edge ([yshift=-3]user-2.east);
+
+      \path[<->, shorten >=2pt, shorten <=2pt]
+        (plm-actor-2.north) edge (exercises-actor)
+        (plm-actor-2.north) edge (lessons-actor)
+        (execution-actor-2) edge (plm-engine);
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemize}
   \item {
     Allow to implement an exercise editor
   }
