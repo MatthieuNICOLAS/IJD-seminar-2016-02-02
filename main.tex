@@ -327,19 +327,6 @@
   \end{center}
 \end{frame}
 
-% TODO: Find a better subtitle
-% TODO: Complete this slide
-\begin{frame}{To a web app}{Results}
-  \begin{itemize}
-  \item {
-    Build quickly a web application from the fat client...
-  }
-  \item {
-    ... but can't share common ressources among users
-  }
-  \end{itemize}
-\end{frame}
-
 \begin{frame}{To a web app}{Multi-user scenario}
   \begin{center}
     \begin{tikzpicture}[
@@ -373,6 +360,19 @@
       \node[below=0.1 of webPLM] {webPLM-server};
     \end{tikzpicture}
   \end{center}
+\end{frame}
+
+% TODO: Find a better subtitle
+% TODO: Complete this slide
+\begin{frame}{To a web app}{Results}
+  \begin{itemize}
+  \item {
+    Build quickly a web application from the fat client...
+  }
+  \item {
+    ... but can't share common ressources among users
+  }
+  \end{itemize}
 \end{frame}
 
 \section{Assessment of user's code}
@@ -494,19 +494,20 @@
       \node[block, right=1 of plm-actor] (plm-engine) { PLM-engine };
 
       \node[draw, densely dotted, fit=(plm-actor) (plm-engine)] {};
-      \node[fit=(plm-actor) (plm-engine), yshift=-30, xshift=30] {webPLM};
+      \node[fit=(plm-actor) (plm-engine), yshift=30] {webPLM};
 
       \node[below=1.5 of plm-actor] (center-mq) {};
 
-      \node[right=0.05 of center-mq] (requests-mq) { \includegraphics[angle=-90, scale=0.3]{img/message-queue-2.png} };
-      \node[right=0.05 of center-mq, xshift=20] {\tiny \textbf{Requests}};
+      \node[right=0.5 of center-mq] (requests-mq) { \includegraphics[angle=-90, scale=0.3]{img/message-queue-2.png} };
+      \node[right=0.5 of center-mq, xshift=20] {\tiny \textbf{Requests}};
 
-      \node[left=0.05 of center-mq] (reply-mq) { \includegraphics[angle=90, scale=0.3]{img/message-queue-2.png} };
-      \node[left=0.05 of center-mq, xshift=-20] {\tiny \textbf{Reply}};
+      \node[left=0.5 of center-mq] (reply-mq) { \includegraphics[angle=90, scale=0.3]{img/message-queue-2.png} };
+      \node[left=0.5 of center-mq, xshift=-20] {\tiny \textbf{Reply}};
+      \node[right=2.5 of center-mq, opacity=0.6] (reply-mq-2) { \includegraphics[angle=90, scale=0.3]{img/message-queue-2.png} };
 
       \node[judge, below=1.5 of center-mq] (judge1) {Judge 1};
-      \node[judge, right=of judge1] (judge2) {Judge 2};
-      \node[right=of judge2] (judge3) {...};
+      \node[judge, right=0.5 of judge1] (judge2) {Judge 2};
+      \node[right=0.5 of judge2] (judge3) {...};
 
       \node[draw, densely dotted, fit=(judge1) (judge2) (judge3)] {};
       \node[fit=(judge1) (judge2) (judge3), yshift=-35] {Judges};
@@ -516,10 +517,14 @@
         (plm-actor) edge node[sloped, anchor=center, above] {\tiny save result} (plm-engine)
         ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay results} ([yshift=-0.2 cm]user.east);
       \path[->, shorten >=2pt, shorten <=2pt]
-        (plm-actor.south) edge[bend left] node[below right] {\tiny submit request} (requests-mq.north)
+        (plm-actor.south) edge[bend left] node[below right, xshift=5] {\tiny submit request} (requests-mq.north)
         (requests-mq.south) edge[bend left] node[right] {\tiny retrieve request} (judge1.north)
         (judge1.north) edge[bend left] node[left] {\tiny send result} (reply-mq.south)
         (reply-mq.north) edge[bend left] node[left] {\tiny retrieve result} (plm-actor.south);
+      \path[->, dashed, shorten >=2pt, shorten <=2pt, opacity=0.6]
+        (requests-mq.south) edge[bend right] (judge2.north)
+        (judge2.north) edge[bend right] (reply-mq-2.south)
+        (reply-mq-2.north) edge[bend right] ([yshift=-15]plm-actor.east);
     \end{tikzpicture}
   \end{center}
 \end{frame}
