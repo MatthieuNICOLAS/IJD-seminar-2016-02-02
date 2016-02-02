@@ -19,7 +19,7 @@
 \definecolor{purple-custom}{RGB}{54, 51, 119}
 \definecolor{orange-custom}{RGB}{227, 164, 79}
 \definecolor{yellow-custom}{RGB}{170, 142, 57}
-\definecolor{green-user}{HTML}{b0cb1f}
+\definecolor{green-user}{RGB}{176, 203, 31}
 \definecolor{blue-user}{HTML}{008dd2}
 \definecolor{red-user}{HTML}{e31e24}
 % There are many different themes available for Beamer. A comprehensive
@@ -994,13 +994,11 @@
         ([yshift=3]user-1.east) edge node[sloped, anchor=center, above] {\tiny API call} ([yshift=3]plm-actor-1.west)
         ([yshift=3]plm-actor-1.east) edge node[sloped, anchor=center, above] {\tiny command} ([yshift=3]execution-actor-1.west)
         ([yshift=-3]execution-actor-1.west) edge node[sloped, anchor=center, below] {\tiny send result} ([yshift=-3]plm-actor-1.east)
-        ([yshift=-3]plm-actor-1.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-3]user-1.east)
-        (exercises-actor) edge node[align=center, scale=0.6] {use data\\models} (plm-engine);
+        ([yshift=-3]plm-actor-1.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-3]user-1.east);
 
       \path[<->, shorten >=2pt, shorten <=2pt]
         (plm-actor-1.south) edge (exercises-actor)
-        (plm-actor-1.south) edge (lessons-actor)
-        (execution-actor-1) edge (plm-engine);
+        (plm-actor-1.south) edge (lessons-actor);
 
       \node[below left=0.5 of lessons-actor] (user-2) { \includegraphics[scale=0.05]{img/user-3.pdf} };
 
@@ -1015,8 +1013,13 @@
 
       \path[<->, shorten >=2pt, shorten <=2pt]
         (plm-actor-2.north) edge (exercises-actor)
-        (plm-actor-2.north) edge (lessons-actor)
-        (execution-actor-2) edge (plm-engine);
+        (plm-actor-2.north) edge (lessons-actor);
+
+      \path[->, dashed, shorten >=2pt, shorten <=2pt]
+        (execution-actor-1) edge (plm-engine)
+        (execution-actor-2) edge (plm-engine)
+        (exercises-actor) edge node[align=center, scale=0.6] {use data\\models} (plm-engine);
+
     \end{tikzpicture}
   \end{center}
   \begin{itemize}
