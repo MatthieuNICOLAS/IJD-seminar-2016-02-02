@@ -269,8 +269,13 @@
       \umlemptyclass[x=4, y=-2]{Lesson}
       \umlemptyclass[x=8, y=-4]{Exercise}
 
+      \begin{umlclass}[x=8, y=0]{ExerciseRunner}{}{
+        + runExercise() : void}
+      \end{umlclass}
+
       \umlunicompo[arg2=lessons]{Game}{Lesson}
       \umlunicompo[arg2=exercises]{Lesson}{Exercise}
+      \umlunicompo[arg2=runner]{Game}{ExerciseRunner}
       \umluniassoc[geometry=|-, anchor1=-60, arg2=currentLesson]{Game}{Lesson}
       \umluniassoc[geometry=|-, anchor1=-120, arg2=currentExercise]{Game}{Exercise}
 
