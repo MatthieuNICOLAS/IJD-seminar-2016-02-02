@@ -682,133 +682,6 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{Assessment of user's code}{Example of Dockerfile}
-  \begin{itemize}
-  \item {
-    Dockerfiles describe how to set up the application
-  }
-  \begin{center}
-    \includegraphics[scale=0.12]{img/dockerfile-white.png}
-  \end{center}
-  \item {
-    Run \emph{docker build \textcolor{red}{-t tag} \textcolor{blue}{/path/to/Dockerfile}} to build  the image
-  }
-  \item {
-    Start containers with \emph{docker run \textcolor{red}{tag}}
-  }
-  \end{itemize}
-\end{frame}
-
-{ % all template changes are local to this group.
-  \setbeamertemplate{navigation symbols}{}
-  \begin{frame}[plain]
-      \begin{tikzpicture}[remember picture,overlay]
-          \node[at=(current page.center)] {
-              \includegraphics[width=\paperwidth]{img/dockerfile-white.png}
-          };
-      \end{tikzpicture}
-  \end{frame}
-}
-
-\begin{frame}{Assessment of user's code}{Example of Dockerfile}
-  \begin{itemize}
-  \item {
-    Dockerfiles describe how to set up the application
-  }
-  \begin{center}
-    \includegraphics[scale=0.12]{img/dockerfile-white.png}
-  \end{center}
-  \item {
-    Run \emph{docker build \textcolor{red}{-t tag} \textcolor{blue}{/path/to/Dockerfile}} to build  the image
-  }
-  \item {
-    Start containers with \emph{docker run \textcolor{red}{tag}}
-  }
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Assessment of user's code}{More about \emph{docker run}}
-  \begin{itemize}
-  \item {
-    Can also manage
-    \begin{itemize}
-    \item {
-      Ports
-      \pause
-    }
-    \item {
-      Volumes
-      \pause
-    }
-    \item {
-      Links between containers
-      \pause
-    }
-    \item {
-      Environment variables
-    }
-    \item {
-      Runtime constraints on resources
-    }
-    \item {
-      Restart policies
-    }
-    \item {
-      And a \textbf{lot more}
-      \pause
-    }
-    \end{itemize}
-  }
-  \item[~]
-  \item {
-    Commands can become quite complex
-  }
-  \end{itemize}
-  \begin{center} {
-    \emph{docker run \textcolor{blue}{-p 443:9443} \textcolor{red}{-link plm-accounts:accounts} \textcolor{green}{-v \raise.17ex\hbox{$\scriptstyle\sim$}/webPLM/logs/:/app/webplm-dist/logs} webPLM}
-  }
-  \end{center}
-\end{frame}
-
-\begin{frame}{Assessment of user's code}{Docker-compose}
-  \begin{itemize}
-  \item {
-    Tool to easily deploy multi-containers applications
-  }
-  \begin{center}
-    \includegraphics[scale=0.14]{img/docker-compose-white.png}
-  \end{center}
-  \item {
-    Deploy environment with \emph{docker-compose up}
-  }
-  \end{itemize}
-\end{frame}
-
-{ % all template changes are local to this group.
-  \setbeamertemplate{navigation symbols}{}
-  \begin{frame}[plain]
-      \begin{tikzpicture}[remember picture,overlay]
-          \node[at=(current page.center)] {
-              \includegraphics[width=\paperwidth]{img/docker-compose-white.png}
-          };
-      \end{tikzpicture}
-  \end{frame}
-}
-
-\begin{frame}{Assessment of user's code}{Docker-compose}
-  \begin{itemize}
-  \item {
-    Tool to easily deploy multi-containers applications
-  }
-  \begin{center}
-    \includegraphics[scale=0.14]{img/docker-compose-white.png}
-  \end{center}
-  \item {
-    Deploy environment with \emph{docker-compose up}
-  }
-  \end{itemize}
-\end{frame}
-
 \begin{frame}{Assessment of user's code}{Docker in our case}
   \begin{itemize}
   \item{
@@ -818,7 +691,7 @@
     Restart judges automatically
   }
   \item {
-    Limit users' mischiefs
+    Limit judges' ressources
   }
   \end{itemize}
 \end{frame}
