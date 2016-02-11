@@ -62,7 +62,7 @@
 
 \author{Matthieu~Nicolas}
 
-\date{IJD Seminar, 2016-02-02}
+\date{COAST meeting, 2016-02-12}
 
 \subject{Theoretical Computer Science}
 
@@ -367,6 +367,51 @@
   \end{center}
 \end{frame}
 
+\begin{frame}{To a web app}{Dealing with multi-user}
+  \begin{itemize}
+  \item {
+    \textbf{Game} is a \emph{singleton}
+    \pause
+  }
+  \item {
+    Do you remember that we store the user's session in \textbf{Game}?
+  }
+  \item[~] {
+    \begin{center}
+      \begin{tikzpicture}
+
+        \umlemptyclass{Game}
+        \umlemptyclass[x=4, y=-2]{Lesson}
+        \umlemptyclass[x=8, y=-4]{Exercise}
+
+        \begin{umlclass}[x=8, y=0]{ExerciseRunner}{}{
+          + runExercise() : void}
+        \end{umlclass}
+
+        \umlunicompo[arg2=lessons]{Game}{Lesson}
+        \umlunicompo[arg2=exercises]{Lesson}{Exercise}
+        \umlunicompo[arg2=runner]{Game}{ExerciseRunner}
+        \umluniassoc[geometry=|-, anchor1=-60, arg2=currentLesson]{Game}{Lesson}
+        \umluniassoc[geometry=|-, anchor1=-120, arg2=currentExercise]{Game}{Exercise}
+
+      \end{tikzpicture}
+    \end{center}
+  }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{To a web app}{Removing the singleton \textbf{Game}}
+  \begin{itemize}
+  \item {
+    Need to refactor all components accessing it
+    \pause
+  }
+  \item[~]
+  \item {Let's save it for later!}
+  \item {Add \textbf{Game} as constructor's parameter}
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{To a web app}{Multi-user scenario}
   \begin{center}
     \begin{tikzpicture}[
@@ -429,8 +474,7 @@
 
 \subsection{Client-side}
 
-% TODO: Find a subtitle
-\begin{frame}{To a web app}{}
+\begin{frame}{To a web app}{Adding the user interface}
   \begin{center}
     \begin{tikzpicture}[
       scale=1,
@@ -466,7 +510,7 @@
 \end{frame}
 
 % TODO: Find a subtitle
-\begin{frame}{To a web app}
+\begin{frame}{To a web app}{}
   \begin{itemize}
     \item Have to translate user's actions into API calls
     \item Have to re-implement PLM-engine's data models
