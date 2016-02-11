@@ -225,6 +225,7 @@
     \begin{center}
       \includegraphics[scale=0.2]{img/commit.png}
     \end{center}
+    \pause
   }
   \item {
     Working in anonymous branches
@@ -742,8 +743,6 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Docker}
-
 \begin{frame}{Assessment of user's code}{Docker}
   \begin{itemize}
   \item {
@@ -761,7 +760,7 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{Assessment of user's code}{Docker in our case}
+\begin{frame}{Assessment of user's code}{In our case}
   \begin{itemize}
   \item{
     Deploy easily all components
@@ -852,9 +851,6 @@
 \begin{frame}{Result}{Live-session in TELECOM Nancy}
   \begin{itemize}
   \item {
-    Rushed to release a stable version before the start of the school year
-  }
-  \item {
     Used in TELECOM Nancy in September 2015
   }
   \item {
@@ -893,31 +889,61 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Result}{Refactor the code}
+\section{Current tasks}
+
+\begin{frame}{Current tasks}{Refactor PLM-engine}
   \begin{itemize}
   \item {
-    Needed to clean some parts of the code before further building
+    Want to remove lessons and exercises from PLM-engine, from \textbf{Game}
+    \begin{itemize}
+    \item {
+      Need to release new version of webPLM and Judge for each change
+    }
+    \item {
+      Heavy and error prone workflow
+    }
+    \item {
+      Want to implement an exercise editor
+    }
+    \end{itemize}
+    \pause
   }
+  \item[~]
   \item {
-    Merged local and centralized mode branches
+    Gradually shifted to get rid of \textbf{Game}
+    \begin{itemize}
+    \item {
+      More annoying than useful
+    }
+    \end{itemize}
   }
   \end{itemize}
 \end{frame}
 
-\section{Next steps}
-
-\begin{frame}{Next steps}{Extract components from PLM-engine}
+\begin{frame}{Current work}{Rework workflow with judges}
   \begin{itemize}
   \item {
-    Most components are inside PLM-engine
+    Judges had all the exercises locally
+    \begin{itemize}
+    \item {
+      Only needed to retrieve the exercise's ID
+    }
+    \end{itemize}
+    \pause
   }
+  \item[~]
   \item {
-    Updating PLM-engine $\,\to\,$ new version of webPLM and Judge
-  }
-  \item {
-    Heavy and error prone workflow
+    Now need to transfer the exercise's model
+    \begin{itemize}
+    \item {
+      Implement methods to export/import exercises as/from JSON
+    }
+    \end{itemize}
   }
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Current work}{WIP architecture}
   \begin{center}
     \begin{tikzpicture}[
       scale=1,
@@ -977,16 +1003,14 @@
         (execution-actor-2) edge (plm-engine)
         (exercises-actor) edge node[align=center, scale=0.6] {use data\\models} (plm-engine);
 
+      \path[dashed, shorten >=3pt, shorten <=3pt]
+        (lessons-actor) edge (exercises-actor);
+
     \end{tikzpicture}
   \end{center}
-  \begin{itemize}
-  \item {
-    Allow to implement an exercise editor
-  }
-  \end{itemize}
 \end{frame}
 
-\begin{frame}{Next steps}{Solve performance issues}
+\begin{frame}{Current tasks}{Solve performance issues}
   \begin{itemize}
   \item {
     Set up some monitoring tools
