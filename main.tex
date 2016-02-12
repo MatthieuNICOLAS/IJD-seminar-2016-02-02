@@ -119,40 +119,6 @@
   \end{center}
 \end{frame}
 
-\subsection{About PLM}
-
-% QUESTION: Need slides for these infos or talk about them in the video?
-\begin{frame}{Presentation of PLM}{12 lessons, 200 exercises}
-  \begin{center}
-    \includegraphics[scale=0.18]<1>{img/maze.png}
-    \includegraphics[scale=0.18]<2>{img/hanoi.png}
-    \includegraphics[scale=0.18]<3>{img/logo.png}
-  \end{center}
-\end{frame}
-
-\begin{frame}{Presentation of PLM}{Languages and programming languages}
-  \begin{itemize}
-    \item {
-      Available languages:
-      \begin{itemize}
-      \item English
-      \item French
-      \item Brazilian Portuguese
-      \end{itemize}
-    }
-    \item[~]
-    \item {
-      Supported programming languages:
-    }
-  \end{itemize}
-  \begin{center}
-    \includegraphics[scale=0.16]{img/java.png}
-    ~
-    \includegraphics[scale=0.4]{img/scala.png}
-    \includegraphics[scale=0.18]{img/python.png}
-  \end{center}
-\end{frame}
-
 \subsection{Architecture}
 
 \begin{frame}{Presentation of PLM}{Application's architecture}
@@ -236,9 +202,9 @@
   \end{itemize}
 \end{frame}
 
-\subsection{Targets}
+\subsection{Desired users}
 
-\begin{frame}{Presentation of PLM}{Targets}
+\begin{frame}{Presentation of PLM}{Desired users}
   \begin{itemize}
   \item {
     Students obviously
@@ -374,18 +340,8 @@
   \item {
     Designed an API over PLM-engine
   }
-  \item {
-    Only need to implement a controller
-    \begin{itemize}
-    \item Verify calls received from the client
-    \item Query or command PLM-engine according to the call
-    \item Send back result or acknowledgement to the client
-    \end{itemize}
-  }
+  \item[~]
   \end{itemize}
-\end{frame}
-
-\begin{frame}{To a web app}{Interactions between components}
   \begin{center}
     \begin{tikzpicture}[
       scale=1,
@@ -508,61 +464,14 @@
   \end{center}
 \end{frame}
 
-% TODO: Find a better subtitle
-% TODO: Complete this slide
 \begin{frame}{To a web app}{Results}
   \begin{itemize}
   \item {
     Build quickly a web server from the fat client...
   }
   \item {
-    ... but we also need a user interface
+    ... but still need to address some design issues
   }
-  \end{itemize}
-\end{frame}
-
-\subsection{Client-side}
-
-\begin{frame}{To a web app}{Adding the user interface}
-  \begin{center}
-    \begin{tikzpicture}[
-      scale=1,
-      block/.style={
-        rectangle, rounded corners=9pt,
-        text width=8em,
-        text centered,
-        minimum height=3em,
-        draw=black!50,
-        fill=black!20
-      }
-    ]
-
-      \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
-      \node[right=0.1 of user] (browser) { \includegraphics[scale=0.015]{img/firefox.png} };
-      \node[block, right=1.5 of browser, text width=2em] (UI) {UI};
-
-      \node[block, right=1.5 of UI, text width=4em] (plm-actor) { PLM-actor };
-      \node[block, right=2 of plm-actor, text width=4em](plm-engine) { PLM-engine };
-
-      \node[draw, densely dotted, fit=(plm-actor) (plm-engine)] (webPLM) {};
-      \node[below=0.1 of webPLM] {webPLM-server};
-
-      \path[->, shorten >=2pt, shorten <=2pt]
-        (browser) edge node[sloped, anchor=center, above] {\tiny user's action} (UI)
-        (UI) edge node[sloped, anchor=center, above] {\tiny API call} (plm-actor)
-        (plm-actor) edge node[sloped, anchor=center, above] {\tiny query / command} (plm-engine)
-        ([yshift=-0.2 cm]plm-engine.west) edge node[sloped, anchor=center, below] {\tiny send result} ([yshift=-0.2 cm]plm-actor.east)
-        ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-0.2 cm]UI.east)
-        ([yshift=-0.2 cm]UI.west) edge node[sloped, anchor=center, below] {\tiny update view} ([yshift=-0.2 cm]browser.east);
-    \end{tikzpicture}
-  \end{center}
-\end{frame}
-
-% TODO: Find a subtitle
-\begin{frame}{To a web app}{}
-  \begin{itemize}
-    \item Have to translate user's actions into API calls
-    \item Have to re-implement PLM-engine's data models
   \end{itemize}
 \end{frame}
 
@@ -615,99 +524,6 @@
   \begin{itemize}
     \item Delegate execution to workers
   \end{itemize}
-  \begin{center}
-    \begin{tikzpicture}[
-      scale=1,
-      block/.style={
-        rectangle, rounded corners=9pt,
-        text width=8em,
-        text centered,
-        minimum height=3em,
-        draw=black!50,
-        fill=black!20
-      },
-      judge/.style={
-        block,
-        text width=4em
-      }
-    ]
-
-      \node (user) { \includegraphics[scale=0.05]{img/user.pdf} };
-
-      \node[block, right=2 of user] (plm-actor) { PLM-actor };
-      \node[block, right=2 of plm-actor] (plm-engine) { PLM-engine };
-
-      \node[draw, densely dotted, fit=(plm-actor) (plm-engine)] (webPLM) {};
-      \node[above=0.1 of webPLM] {webPLM-server};
-
-      \node[judge, below=2 of webPLM] (judge) {Worker 2};
-      \node[right=of judge] (judge-2) {...};
-      \node[judge, left=of judge] (judge-3) {Worker 1};
-      \node[draw, densely dotted, fit=(judge-2) (judge) (judge-3)] (judges) {};
-      \node[below=0.1 of judges] {Workers};
-
-      \path[->, shorten >=2pt, shorten <=2pt]
-        (user) edge node[sloped, anchor=center, above] {\tiny API call} (plm-actor)
-        (plm-actor) edge node[sloped, anchor=center, above] {\tiny query / command} (plm-engine)
-        ([yshift=-0.2 cm]plm-engine.west) edge node[sloped, anchor=center, below] {\tiny send result} ([yshift=-0.2 cm]plm-actor.east)
-        ([yshift=-0.2 cm]plm-actor.west) edge node[sloped, anchor=center, below] {\tiny relay result} ([yshift=-0.2 cm]user.east)
-        ([xshift=3]webPLM.south) edge node[right] {\tiny delegate execution} ([xshift=20]judges.north)
-        ([xshift=14]judges.north) edge node[left] {\tiny send result} ([xshift=-3]webPLM.south);
-    \end{tikzpicture}
-  \end{center}
-\end{frame}
-
-\begin{frame}{Assessment of user's code}{The judges}
-  \begin{itemize}
-  \item Called \emph{Judges} in the litterature
-  \item Use PLM-engine as well
-  \item[~]
-  \item {
-    Workflow:
-    \begin{itemize}
-    \item Retrieve an execution request
-    \item Parse the request to extract parameters
-    \item Configure PLM-engine according to them
-    \item Run the user's code
-    \item Send back result to webPLM
-    \end{itemize}
-  }
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Assessment of user's code}{Message queues}
-  \begin{itemize}
-    \item {
-      Message-driven architecture
-    }
-    \item {
-      Loosely coupled system
-    }
-    \item {
-      \alert<2> {Asynchronous}/Synchronous 
-    }
-    \item {
-      Help to implement:
-      \begin{itemize}
-        \item Producer/Consumer pattern
-        \item \alert<2> {Request/Response pattern}
-      \end{itemize}
-    }
-    \item {
-      Different reliability patterns of the message processing:
-      \begin{itemize}
-        \item \alert<2> {Only one worker}
-        \item At least one worker
-        \item All workers
-      \end{itemize}
-    }
-    \item {
-      Easy to scale
-    }
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Assessment of user's code}{Architecture with judges}
   \begin{center}
     \begin{tikzpicture}[
       scale=1,
@@ -955,43 +771,6 @@
     }
     \end{itemize}
     \pause
-  }
-  \item[~]
-  \item {
-    Gradually shifted to get rid of \textbf{Game}
-    \begin{itemize}
-    \item {
-      More annoying than useful
-    }
-    \end{itemize}
-    \pause
-  }
-  \item[~]
-  \item {
-    Rewriting all components using \textbf{Game}
-  }
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Current work}{Rework workflow with judges}
-  \begin{itemize}
-  \item {
-    Judges had all the exercises locally
-    \begin{itemize}
-    \item {
-      Only needed to retrieve the exercise's ID
-    }
-    \end{itemize}
-    \pause
-  }
-  \item[~]
-  \item {
-    Now need to transfer the exercise's model
-    \begin{itemize}
-    \item {
-      Implement methods to export/import exercises as/from JSON
-    }
-    \end{itemize}
   }
   \end{itemize}
 \end{frame}
